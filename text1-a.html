@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading – Text 1</title>
+<style>
+/* ---------- Общие экраны (одинаковы в вариантах А и Б) ---------- */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#1d1d1f;background:#fff}
+.screen{display:none;max-width:760px;margin:0 auto;padding:20px 16px 60px;font-size:17px;line-height:1.5}
+.screen.on{display:block}
+.screen h1{font-size:1.35em;line-height:1.25;margin:.2em 0 .6em}
+.screen h2{font-size:1.1em;margin:1.4em 0 .5em}
+.muted{color:#555;font-size:.92em}
+.box{border:1px solid #d9d9de;border-radius:10px;padding:14px 16px;margin:14px 0;background:#fafafc}
+label.blk{display:block;margin:.8em 0 .3em;font-weight:600}
+input[type=text],textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid #b8b8c0;border-radius:8px;background:#fff}
+textarea{min-height:76px;resize:vertical}
+.btn{display:inline-block;font:inherit;font-weight:600;padding:12px 20px;border-radius:10px;border:0;background:#1f5fbf;color:#fff;cursor:pointer;margin-top:16px}
+.btn[disabled]{background:#9db3d6;cursor:not-allowed}
+.btn.sec{background:#e9e9ee;color:#1d1d1f}
+.chk{display:flex;gap:10px;align-items:flex-start;margin:12px 0}
+.chk input{margin-top:5px;width:20px;height:20px;flex:none}
+.q{border-top:1px solid #e3e3e8;padding:14px 0}
+.q .qt{font-weight:600;margin-bottom:8px}
+.q.miss .qt{color:#b00020}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:7px 4px;border-radius:8px;cursor:pointer}
+.opt input{margin-top:4px;width:19px;height:19px;flex:none}
+.scale{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.scale label{flex:1 0 44px;text-align:center;border:1px solid #c9c9d1;border-radius:8px;padding:8px 0;cursor:pointer;min-width:40px}
+.scale input{display:block;margin:0 auto 2px}
+.ends{display:flex;justify-content:space-between;font-size:.82em;color:#555}
+.warn{background:#fff4e5;border:1px solid #f0b46a;border-radius:8px;padding:10px 12px;margin:10px 0;font-size:.92em}
+.err{color:#b00020;font-weight:600}
+.confirm{display:none;margin-top:14px}
+.confirm.on{display:block}
+
+/* ---------- Вариант А: эргономичное оформление ---------- */
+.va{max-width:none;padding:0}
+.va .wrap{max-width:31em;margin:0 auto;padding:20px 18px 80px;font-size:var(--fs,18px);line-height:1.5;color:#1a1a1a;background:#fff}
+.va .kick{font-size:.72em;letter-spacing:.08em;text-transform:uppercase;color:#1f5fbf;font-weight:700}
+.va .para p{margin:0 0 .5em}
+.va .para{margin-bottom:.6em}
+.va h1{font-size:1.4em;line-height:1.25;margin:.2em 0 .5em}
+.va .set{border-left:4px solid #1f5fbf;background:#f1f5fc;padding:12px 14px;margin:0 0 22px;border-radius:0 8px 8px 0;font-size:.92em}
+.va .set b{display:block;margin-bottom:4px}
+.va h2{font-size:1.08em;margin:1.5em 0 .4em}
+.va .para{position:relative;padding-left:1.9em}
+.va .pnum{position:absolute;left:0;top:.05em;font-size:.75em;font-weight:700;color:#1f5fbf;background:#e8eefb;border-radius:6px;padding:1px 6px}
+.va .para p{margin:0 0 .4em;text-align:left}
+.va .term{font:inherit;color:inherit;background:none;border:0;padding:0;border-bottom:2px dotted #1f5fbf;cursor:pointer;line-height:inherit}
+.va .note-btn{font-size:.78em;background:none;border:1px solid #c5cfe3;color:#1f5fbf;border-radius:6px;padding:3px 9px;cursor:pointer;margin:2px 0 6px}
+.va .note{display:block;font-size:.85em;min-height:60px;margin-bottom:8px}
+.va .wr-card{border:1px solid #d4dcec;border-radius:10px;padding:10px 14px;margin:12px 0 4px 1.9em;font-size:.9em;background:#fbfcff}
+.va .wr-card .ttl{font-weight:700;color:#1f5fbf;font-size:.85em;text-transform:uppercase;letter-spacing:.03em}
+.va mark{background:#ffe680;padding:0 1px}
+#pop{position:absolute;z-index:20;display:none;max-width:min(92vw,26em);background:#fff;border:1px solid #c5cfe3;box-shadow:0 6px 24px rgba(0,0,0,.15);border-radius:10px;padding:12px 14px;font-size:16px;line-height:1.45}
+#pop .tr{color:#555;margin-top:4px}
+#pop .x{float:right;border:0;background:none;font-size:20px;line-height:1;cursor:pointer;color:#555;margin:-4px -4px 0 6px}
+#hl{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:30;display:none;gap:4px;padding:5px;border-radius:26px;background:#1a1a1a;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+#hl button{font:inherit;font-weight:600;font-size:15px;padding:9px 14px;border-radius:20px;border:0;background:transparent;color:#fff;cursor:pointer}
+#hl button+button{border-left:1px solid #555;border-radius:0 20px 20px 0}
+.va u.ul{text-decoration:underline;text-decoration-color:#1f5fbf;text-decoration-thickness:2px;text-underline-offset:3px}
+.va .hint{font-size:.8em;color:#555;margin:10px 0 0}
+/* блок 2: навигация – верхняя панель, содержание, индикатор прогресса */
+.va .topbar{position:sticky;top:0;z-index:15;background:#fff;border-bottom:1px solid #e3e7ef}
+.va .topbar .in{max-width:31em;margin:0 auto;padding:8px 18px;display:flex;align-items:center;gap:8px;font-size:15px}
+.va .topbar .lbl{flex:1;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.va .tb{font:inherit;font-size:14px;font-weight:600;border:1px solid #c5cfe3;background:#fff;color:#1f5fbf;border-radius:8px;padding:6px 10px;cursor:pointer}
+.va .prog{height:4px;background:#e8eefb}
+.va .prog div{height:4px;width:0;background:#1f5fbf;transition:width .15s}
+.va #toc{max-width:31em;margin:0 auto;padding:6px 18px 12px;font-size:15px;border-bottom:1px solid #e3e7ef;background:#fff}
+.va #toc ol{margin:0;padding-left:1.4em}
+.va #toc a{color:#1f5fbf;text-decoration:none;display:block;padding:5px 0}
+.va section.sec{scroll-margin-top:64px}
+/* блок 4: иллюстрация рядом с фрагментом */
+.va figure,.vb figure{margin:14px 0 18px}
+.va figure{margin-left:1.9em}
+.va figure svg,.vb figure svg{width:100%;max-width:440px;height:auto;display:block}
+.va figcaption{font-size:.8em;color:#444;margin-top:6px}
+.vb figure{max-width:440px}
+.vb figcaption{font-size:12px;font-style:italic;margin-top:4px}
+/* блок 5: обратная связь к заданиям */
+.va .fb{margin-top:6px;font-weight:600}
+.va .fb.ok{color:#1b7a3a}
+.va .fb.no{color:#b00020}
+
+/* ---------- Вариант Б: традиционный цифровой формат ---------- */
+.vb{max-width:none;padding:0;background:#fdfdfd}
+.vb .banner{background:linear-gradient(120deg,#2b5876,#4e4376);color:#fff;padding:26px 14px 30px;text-align:center}
+.vb .banner .kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;opacity:.8}
+.vb .banner h1{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:400;font-size:24px;margin:8px 0 0;line-height:1.2}
+.vb .cols{display:flex;flex-wrap:wrap;gap:16px;padding:14px 10px 10px}
+.vb article{flex:1 1 520px;min-width:0;font-family:"Times New Roman",Times,serif;font-size:14px;line-height:1.15;color:#3c3c3c}
+.vb article p.para{margin:0;text-indent:1.5em;text-align:justify}
+.vb .term-link{color:#0645ad;text-decoration:underline}
+.vb aside{flex:0 1 230px;font-size:13px;line-height:1.3}
+.vb aside .ab{border:1px solid #ddd;background:#f3f3f3;padding:10px;margin-bottom:12px}
+.vb aside .ab h3{font-size:13px;margin:0 0 6px;text-transform:uppercase;color:#4e4376}
+.vb .wr-block{margin-top:16px;font-size:14px}
+.vb .wr-block h3{font-size:14px;margin:0 0 6px}
+.vb .wr-item{margin:8px 0}
+.vb .finish-wrap{padding:0 10px 60px}
+.vb #gloss{display:none;padding:14px 10px 60px;font-family:"Times New Roman",Times,serif;font-size:14px;line-height:1.3;color:#3c3c3c}
+.vb #gloss dt{font-weight:700;margin-top:10px}
+.vb #gloss dt.cur{background:#fff3a6}
+.tf{display:flex;gap:14px;margin-top:4px}
+.tf label{display:flex;gap:6px;align-items:center;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- 1. Старт -->
+<section class="screen on" id="s-start">
+  <h1>Исследование чтения с экрана</h1>
+  <div id="cfgwarn"></div>
+  <p>Вы прочитаете текст на английском языке по экономике и менеджменту и выполните задания. Работа займёт около 30-40 минут.</p>
+  <div class="box">
+    <b>Порядок работы</b>
+    <ol style="margin:.4em 0 0;padding-left:1.3em">
+      <li>Три вопроса перед чтением.</li>
+      <li>Чтение текста. Время не ограничено, читайте внимательно.</li>
+      <li>Тест из 20 вопросов. Во время теста текст будет недоступен.</li>
+      <li>Короткая анкета о том, как вам работалось со страницей.</li>
+    </ol>
+  </div>
+  <p class="muted">Пожалуйста, не закрывайте и не обновляйте страницу до конца работы и не пользуйтесь переводчиком.</p>
+  <label class="blk" for="code">Код участника (его выдаст преподаватель)</label>
+  <input type="text" id="code" autocomplete="off" autocapitalize="characters" placeholder="например, S07">
+  <div class="chk"><input type="checkbox" id="consent"><label for="consent">Я согласен(на) участвовать в исследовании. Я понимаю, что участие добровольное, а ответы анализируются под кодом, без имени.</label></div>
+  <button class="btn" id="b-start" disabled>Начать</button>
+</section>
+
+<!-- 2. Предтекстовый этап (одинаков в обоих вариантах) -->
+<section class="screen" id="s-pre">
+  <h1>Перед чтением</h1>
+  <p>Ответьте коротко на вопросы (по-английски или по-русски).</p>
+  <div id="pre-qs"></div>
+  <button class="btn" id="b-pre">Перейти к тексту</button>
+</section>
+
+<!-- 3. Чтение (различается в вариантах А и Б) -->
+<section class="screen va" id="s-read">
+<div class="topbar"><div class="in"><span class="lbl">Text 1 &middot; Economics and Management</span><button class="tb" id="toc-btn" type="button">Содержание</button><button class="tb" id="fs-minus" type="button" aria-label="Уменьшить шрифт">A&minus;</button><button class="tb" id="fs-plus" type="button" aria-label="Увеличить шрифт">A+</button></div><div class="prog"><div id="prog"></div></div></div>
+<nav id="toc" hidden><ol><li><a href="#sec0" data-sec="0">The limits of rational choice</a></li><li><a href="#sec1" data-sec="1">Shortcuts and biases</a></li><li><a href="#sec2" data-sec="2">What is a nudge?</a></li><li><a href="#sec3" data-sec="3">The power of defaults</a></li><li><a href="#sec4" data-sec="4">Nudges in business</a></li><li><a href="#sec5" data-sec="5">Ethical questions</a></li></ol></nav>
+<div class="wrap"><h1>Nudges: How Small Changes Shape Economic Decisions</h1>
+<div class="set"><b>Задание</b>Прочитайте текст внимательно, чтобы полностью и точно понять его: основную мысль, аргументы автора, примеры и значения выделенных терминов. Возвращайтесь к фрагментам, которые показались трудными.</div>
+<article id="art">
+<section class="sec" id="sec0"><h2>The limits of rational choice</h2><div class="para"><span class="pnum">1</span><p>For most of the twentieth century, economic theory was built on a simple idea: people are <button type="button" class="term" data-t="rational agents">rational agents</button>. According to this view, consumers and managers collect all the relevant information, compare the costs and benefits of each option and then choose the one that serves their interests best. This model made economic behaviour easy to describe with mathematics, and it is still useful for many purposes. However, anyone who has ever bought something they did not need, or delayed saving for retirement, knows that real decisions rarely look like this.</p><button class="note-btn" type="button">+ заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
+<div class="wr-card"><div class="ttl">Проверьте себя</div><div>Traditional economic models are still useful for many purposes.</div><div class="tf"><label><input type="radio" name="wr0" value="T"> True</label><label><input type="radio" name="wr0" value="F"> False</label></div><div class="fb" id="fb0"></div></div>
+</section>
+<section class="sec" id="sec1"><h2>Shortcuts and biases</h2><div class="para"><span class="pnum">2</span><p>Behavioural economics emerged when researchers began to combine economics with psychology. The psychologists Daniel Kahneman and Amos Tversky showed that people often rely on <button type="button" class="term" data-t="heuristics">heuristics</button>, mental shortcuts that allow them to decide quickly without analysing every detail. Heuristics save time and effort, but they also lead to predictable errors. One of the best-known examples is <button type="button" class="term" data-t="loss aversion">loss aversion</button>: losing 100 euros feels considerably worse than gaining 100 euros feels good. As a result, people may refuse a fair bet or keep a failing investment simply because they do not want to accept a loss.</p><button class="note-btn" type="button">+ заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
+</section>
+<section class="sec" id="sec2"><h2>What is a nudge?</h2><div class="para"><span class="pnum">3</span><p>In 2008 the economist Richard Thaler and the legal scholar Cass Sunstein published the book Nudge, which turned these findings into a practical approach. They argued that every decision takes place in a particular context, and the way this context is organised, the <button type="button" class="term" data-t="choice architecture">choice architecture</button>, inevitably influences what people choose. A nudge is a small change in this architecture that makes a desirable choice easier or more attractive. Importantly, a nudge does not forbid any option and does not significantly change financial incentives. Placing fruit at eye level in a canteen is a nudge; banning sweets is not.</p><button class="note-btn" type="button">+ заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
+<div class="wr-card"><div class="ttl">Проверьте себя</div><div>A nudge must change the price of an option.</div><div class="tf"><label><input type="radio" name="wr1" value="T"> True</label><label><input type="radio" name="wr1" value="F"> False</label></div><div class="fb" id="fb1"></div></div>
+</section>
+<section class="sec" id="sec3"><h2>The power of defaults</h2><div class="para"><span class="pnum">4</span><p>The most powerful nudges usually involve the <button type="button" class="term" data-t="default option">default option</button>, the outcome that occurs if a person does nothing. Pension schemes provide a famous example. When employees must actively sign up for a company pension, many of them never do so, even if they intend to. When they are enrolled automatically and are free to <button type="button" class="term" data-t="opt out">opt out</button>, participation rises sharply (Figure 1). The financial conditions remain exactly the same; only the starting point has changed. Several countries, including the United Kingdom, have used this insight to increase retirement saving.</p><button class="note-btn" type="button">+ заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
+<figure><svg viewBox="0 0 360 286" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Opt-in and automatic enrolment" font-family="system-ui, Arial, sans-serif"><rect x="10" y="8" width="340" height="104" rx="10" fill="#f4f4f6" stroke="#8a8a93" stroke-width="1.5"/><text x="24" y="32" font-size="15" font-weight="700" fill="#1a1a1a">Opt-in</text><text x="24" y="54" font-size="14" fill="#1a1a1a">Default: no pension</text><text x="24" y="74" font-size="14" fill="#1a1a1a">To save, the employee must sign up.</text><text x="24" y="94" font-size="14" fill="#1a1a1a">Many employees never do so.</text><rect x="10" y="128" width="340" height="104" rx="10" fill="#eef3fb" stroke="#1f5fbf" stroke-width="1.5"/><text x="24" y="152" font-size="15" font-weight="700" fill="#1a1a1a">Automatic enrolment</text><text x="24" y="174" font-size="14" fill="#1a1a1a">Default: pension</text><text x="24" y="194" font-size="14" fill="#1a1a1a">The employee is free to opt out.</text><text x="24" y="214" font-size="14" fill="#1a1a1a">Participation rises sharply.</text><text x="180" y="268" font-size="14" text-anchor="middle" fill="#1a1a1a">The financial conditions are the same in both cases.</text></svg><figcaption>Figure 1. Opt-in and automatic enrolment in a company pension</figcaption></figure>
+</section>
+<section class="sec" id="sec4"><h2>Nudges in business</h2><div class="para"><span class="pnum">5</span><p>Companies have also learned to apply behavioural insights. The way information is presented, or <button type="button" class="term" data-t="framing">framing</button>, affects how customers perceive a product: shoppers tend to rate minced meat labelled “75% lean” more positively than meat labelled “25% fat”, although the two descriptions are identical. Similar techniques work in other areas. Energy companies, for example, have reduced household consumption by sending customers reports that compare their energy use with that of their neighbours. Such social comparisons change behaviour at a very low cost.</p><button class="note-btn" type="button">+ заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
+<div class="wr-card"><div class="ttl">Проверьте себя</div><div>Framing changes the facts about a product.</div><div class="tf"><label><input type="radio" name="wr2" value="T"> True</label><label><input type="radio" name="wr2" value="F"> False</label></div><div class="fb" id="fb2"></div></div>
+</section>
+<section class="sec" id="sec5"><h2>Ethical questions</h2><div class="para"><span class="pnum">6</span><p>Critics, however, point out that the line between helping and manipulating is thin. If a company deliberately makes it difficult to cancel a subscription, it creates what Thaler calls <button type="button" class="term" data-t="sludge">sludge</button>, friction that discourages people from acting in their own interests. For this reason, many researchers argue that nudges should be transparent and easy to avoid, and that their goals should be ones that the people affected would accept. Used responsibly, nudges remain a cheap and effective tool; used carelessly, they can damage the trust on which markets depend.</p><button class="note-btn" type="button">+ заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
+</section>
+</article>
+<p class="hint">Термины с пунктирным подчёркиванием можно нажать, чтобы увидеть пояснение. Чтобы выделить или подчеркнуть фрагмент, выделите его пальцем и выберите действие внизу экрана. К каждому абзацу можно добавить заметку. Кнопки A&minus; и A+ меняют размер шрифта.</p>
+<button class="btn" id="b-finish" type="button">Я закончил(а) чтение</button><div class="confirm" id="confirm"><p>Перейти к тесту? Вернуться к тексту будет нельзя.</p><button class="btn" id="b-go" type="button">Да, перейти к тесту</button> <button class="btn sec" id="b-cancel" type="button">Продолжить чтение</button></div></div>
+</section>
+
+<!-- 4. Тест -->
+<section class="screen" id="s-test">
+  <h1>Тест по тексту</h1>
+  <p class="muted">Выберите один вариант ответа в каждом вопросе. Текст во время теста недоступен.</p>
+  <div id="test-qs"></div>
+  <p id="test-err" class="err"></p>
+  <button class="btn" id="b-test">Отправить ответы теста</button>
+</section>
+
+<!-- 5. Анкета -->
+<section class="screen" id="s-q">
+  <h1>Анкета</h1>
+  <div class="q" id="q-paas">
+    <div class="qt">Сколько умственных усилий потребовало от вас чтение этого текста?</div>
+    <div id="paas-opts"></div>
+  </div>
+  <div class="q" id="q-attr">
+    <div class="qt">Насколько привлекательной внешне вам показалась страница с текстом?</div>
+    <div class="scale" id="attr-scale"></div>
+    <div class="ends"><span>1 – совсем непривлекательная</span><span>7 – очень привлекательная</span></div>
+  </div>
+  <h2>Удобство страницы</h2>
+  <p class="muted">Под «системой» здесь понимается страница с текстом, с которой вы работали. Отметьте, насколько вы согласны с каждым утверждением.</p>
+  <div id="sus-qs"></div>
+  <p id="q-err" class="err"></p>
+  <button class="btn" id="b-q">Завершить</button>
+</section>
+
+<!-- 6. Конец -->
+<section class="screen" id="s-done">
+  <h1>Спасибо!</h1>
+  <p id="done-score"></p>
+  <p id="done-status" class="muted">Отправляем ответы…</p>
+  <button class="btn sec" id="b-dl" style="display:none">Скачать файл с ответами</button>
+</section>
+
+<div id="pop" role="dialog"></div>
+<div id="hl"><button id="hl-mark" type="button">Выделить</button><button id="hl-under" type="button">Подчеркнуть</button></div>
+
+<script>
+/* ===== НАСТРОЙКА: вставьте сюда адрес веб-приложения Google Apps Script ===== */
+const ENDPOINT = "PASTE_APPS_SCRIPT_URL_HERE";
+/* ============================================================================ */
+const CFG = {"page_version": "2026-11-26", "text_id": "text1", "variant": "A", "group": 1, "pre": ["Think of a time when you made a decision that was not in your best interest (for example, buying something you did not need). Why did it happen?", "Look at the title. What do you think the word “nudge” means?", "Can a company influence your choice without forcing you? How?"], "wr": [[0, "Traditional economic models are still useful for many purposes.", true], [2, "A nudge must change the price of an option.", false], [4, "Framing changes the facts about a product.", false]], "glossary": {"rational agents": ["people who always use all available information and logic to choose the option that is best for them", "рациональные агенты"], "heuristics": ["simple mental rules that help people make decisions quickly", "эвристики"], "loss aversion": ["the tendency to feel losses more strongly than gains of the same size", "неприятие потерь"], "choice architecture": ["the way the situation in which people make a choice is designed and organised", "архитектура выбора"], "default option": ["what happens automatically if a person does not make an active choice", "вариант по умолчанию"], "opt out": ["to choose to leave a scheme or system that you were included in automatically", "отказаться от участия"], "framing": ["presenting the same information in different words so that it is perceived differently", "эффект формулировки"], "sludge": ["unnecessary obstacles that make it harder for people to do what is good for them", "искусственные препятствия"]}, "test": [{"p": "F", "q": "According to traditional economic theory, people…", "o": ["avoid making decisions about money", "copy the choices made by other people", "rely mostly on their emotions when choosing", "weigh costs and benefits before choosing"], "k": 3}, {"p": "F", "q": "Who showed that people often rely on mental shortcuts?", "o": ["managers of large energy companies", "researchers from the UK government", "Richard Thaler and Cass Sunstein", "Daniel Kahneman and Amos Tversky"], "k": 3}, {"p": "F", "q": "According to the text, loss aversion means that…", "o": ["a loss feels stronger than an equal gain", "people quickly forget about their losses", "people bet more money after losing", "people try to avoid every possible kind of risk"], "k": 0}, {"p": "F", "q": "When was the book Nudge published?", "o": ["in 1998", "in 2002", "in 2008", "in 2012"], "k": 2}, {"p": "F", "q": "Which example of a nudge is given in the text?", "o": ["paying staff a bonus for eating well", "raising the tax on sugary drinks and snacks", "banning sweets and chocolate in a university canteen", "putting fruit at eye level in a canteen"], "k": 3}, {"p": "F", "q": "What happens when employees are enrolled in a pension scheme automatically?", "o": ["employers pay larger contributions", "far more of them take part", "they lose the right to leave", "their pension conditions improve"], "k": 1}, {"p": "F", "q": "How did energy companies reduce household consumption?", "o": ["by raising the price of gas and electricity", "by installing modern and efficient heating equipment", "by comparing customers with their neighbours", "by introducing strict new regulations"], "k": 2}, {"p": "F", "q": "According to the text, sludge is…", "o": ["a small change that helps people make better choices", "friction that stops people acting in their interest", "a way of presenting the same information", "a financial reward for making a good choice"], "k": 1}, {"p": "C", "q": "What is the main idea of the text?", "o": ["Pension schemes show that people always behave in a rational way.", "Traditional economic theory no longer has any practical value today.", "Small design changes strongly affect choices and must be used responsibly.", "Companies should stop using psychology to influence what their customers buy."], "k": 2}, {"p": "C", "q": "Why does the author mention buying things we do not need?", "o": ["to criticise the shopping habits of most modern consumers", "to give an example of the idea of loss aversion", "to show that real choices often differ from the model", "to introduce the main topic of retirement saving"], "k": 2}, {"p": "C", "q": "What is the relationship between heuristics and errors?", "o": ["They have no connection with errors at all.", "They save effort but cause predictable errors.", "They help people to avoid errors completely.", "Errors force people to invent new and better heuristics."], "k": 1}, {"p": "C", "q": "Why is banning sweets not an example of a nudge?", "o": ["because it changes how food is described", "because it does not change behaviour", "because it costs the canteen too much", "because it takes an option away"], "k": 3}, {"p": "C", "q": "What does the pension example prove?", "o": ["Automatic enrolment is unfair to young employees.", "Money is the main reason why most people decide to save.", "Most employees do not care about their retirement.", "The starting point of a choice can change behaviour."], "k": 3}, {"p": "C", "q": "The two descriptions of minced meat illustrate…", "o": ["the effect of loss aversion", "the effect of framing", "the problem of sludge", "the power of defaults"], "k": 1}, {"p": "C", "q": "Which condition for using nudges responsibly does the author mention?", "o": ["They should be open and easy to avoid.", "They should be approved by a court.", "They should always save companies money.", "They should be hidden from consumers."], "k": 0}, {"p": "C", "q": "What is the author’s overall attitude to nudges?", "o": ["negative: nudges are mostly manipulation", "balanced: useful but potentially harmful", "neutral: the author does not give an opinion", "enthusiastic: nudges can solve most social problems"], "k": 1}, {"p": "T", "q": "In the text, “choice architecture” means…", "o": ["a long-term plan for personal finances", "how the context of a decision is organised", "the list of products that a shop offers", "the design of buildings where people decide"], "k": 1}, {"p": "T", "q": "In the text, “default option” means…", "o": ["what happens if a person does nothing", "a choice that turns out to be wrong", "the option that experts recommend", "the most expensive option on offer"], "k": 0}, {"p": "T", "q": "In the text, “opt out” means…", "o": ["to agree to join a scheme", "to compare several options", "to choose to leave a scheme", "to make a careless or hasty decision"], "k": 2}, {"p": "T", "q": "In the text, “framing” means…", "o": ["the way information is presented", "a mathematical model of choice", "a legal limit on advertising", "putting a picture into a frame"], "k": 0}]};
+</script>
+<script>
+(function(){
+"use strict";
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const now = () => Date.now();
+const params = new URLSearchParams(location.search);
+const T0 = now();
+
+const D = {
+  page_version: CFG.page_version,
+  mode: params.get("test") === "1" ? "test" : "live",
+  text_id: CFG.text_id,
+  variant: CFG.variant,
+  group: CFG.group,
+  session_id: Math.random().toString(36).slice(2, 10) + T0.toString(36),
+  started_at: new Date(T0).toISOString(),
+  user_agent: navigator.userAgent,
+  viewport_w: window.innerWidth, viewport_h: window.innerHeight,
+  screen_w: screen.width, screen_h: screen.height,
+  touch: ("ontouchstart" in window) || navigator.maxTouchPoints > 0 ? 1 : 0,
+};
+const sm = Math.min(screen.width, screen.height);
+D.device = sm < 600 ? "phone" : (sm < 1100 && D.touch ? "tablet" : "desktop");
+
+// ---------- предупреждение для преподавателя ----------
+if (!/^https:\/\/script\.google\.com\//.test(ENDPOINT)) {
+  $("#cfgwarn").innerHTML = '<div class="warn">Адрес Google-таблицы не настроен. Ответы будут сохранены только в файл. Для преподавателя: впишите адрес веб-приложения Apps Script в переменную ENDPOINT.</div>';
+}
+
+// ---------- учёт ухода со страницы ----------
+let hiddenAt = null; D.tab_hidden_count = 0; D.tab_hidden_ms = 0;
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) { hiddenAt = now(); D.tab_hidden_count++; }
+  else if (hiddenAt) { D.tab_hidden_ms += now() - hiddenAt; hiddenAt = null; }
+});
+let guard = false;
+window.addEventListener("beforeunload", e => { if (guard) { e.preventDefault(); e.returnValue = ""; } });
+
+function show(id){ $$(".screen").forEach(s => s.classList.remove("on")); $(id).classList.add("on"); window.scrollTo(0,0); }
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+// ---------- 1. старт ----------
+const code = $("#code"), consent = $("#consent"), bStart = $("#b-start");
+function chkStart(){ bStart.disabled = !(code.value.trim().length >= 2 && consent.checked); }
+code.addEventListener("input", chkStart); consent.addEventListener("change", chkStart);
+bStart.addEventListener("click", () => {
+  D.participant = code.value.trim().toUpperCase();
+  D.consent = 1;
+  try { const k = "rx_done_" + CFG.text_id + "_" + D.participant; if (localStorage.getItem(k)) D.repeat_on_device = 1; } catch(e) {}
+  guard = true;
+  show("#s-pre");
+});
+
+// ---------- 2. предтекстовый этап ----------
+$("#pre-qs").innerHTML = CFG.pre.map((q,i) =>
+  `<label class="blk" for="pre${i}">${i+1}. ${esc(q)}</label><textarea id="pre${i}"></textarea>`).join("");
+$("#b-pre").addEventListener("click", () => {
+  CFG.pre.forEach((q,i) => D["pre_" + (i+1)] = $("#pre"+i).value.trim());
+  startReading();
+});
+
+// ---------- 3. чтение ----------
+let tRead = 0;
+D.returns = 0; D.max_scroll_pct = 0; D.glossary_opens = 0; D.glossary_terms = [];
+D.highlights = 0; D.highlight_texts = [];
+function startReading(){
+  show("#s-read");
+  tRead = now();
+  trackParagraphs();
+  window.addEventListener("scroll", onScroll, {passive:true});
+}
+function onScroll(){
+  if (!$("#s-read").classList.contains("on")) return;
+  const art = $("#art"); if (!art || art.offsetParent === null) return;
+  const r = art.getBoundingClientRect();
+  const seen = Math.min(r.height, Math.max(0, window.innerHeight - r.top));
+  const pct = r.height ? Math.round(100 * seen / r.height) : 0;
+  if (pct > D.max_scroll_pct) D.max_scroll_pct = Math.min(100, pct);
+}
+// Возврат = абзац снова появился на экране после того, как читатель прокрутил его вверх.
+function trackParagraphs(){
+  const state = new Map();
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      const el = en.target, st = state.get(el) || "unseen";
+      if (en.isIntersecting) {
+        if (st === "passed") { D.returns++; }
+        state.set(el, "seen");
+      } else if (st === "seen" && en.boundingClientRect.top < 0 && en.boundingClientRect.height > 0) {
+        state.set(el, "passed");
+      }
+    });
+  }, {threshold: 0});
+  $$("#art .para").forEach(p => io.observe(p));
+}
+
+// глоссарий
+function glossEntry(t){ const g = CFG.glossary[t]; return {en: g[0], ru: g[1]}; }
+function logGloss(t){ D.glossary_opens++; D.glossary_terms.push(t); }
+
+if (CFG.variant === "A") {
+  const pop = $("#pop");
+  $$(".term").forEach(b => b.addEventListener("click", ev => {
+    ev.stopPropagation();
+    const t = b.dataset.t, g = glossEntry(t);
+    pop.innerHTML = `<button class="x" aria-label="Закрыть">×</button><b>${esc(t)}</b> – ${esc(g.en)}<div class="tr">${esc(g.ru)}</div>`;
+    pop.style.display = "block";
+    const r = b.getBoundingClientRect();
+    const w = pop.offsetWidth;
+    let left = r.left + window.scrollX;
+    left = Math.max(8, Math.min(left, window.scrollX + document.documentElement.clientWidth - w - 8));
+    pop.style.left = left + "px";
+    pop.style.top = (r.bottom + window.scrollY + 6) + "px";
+    pop.querySelector(".x").onclick = () => pop.style.display = "none";
+    logGloss(t);
+  }));
+  document.addEventListener("click", e => { if (!pop.contains(e.target)) pop.style.display = "none"; });
+
+  // заметки
+  $$(".note-btn").forEach(b => b.addEventListener("click", () => {
+    const ta = b.nextElementSibling; ta.hidden = !ta.hidden; if (!ta.hidden) ta.focus();
+  }));
+
+  // блок 5: выделение и подчёркивание
+  const hl = $("#hl");
+  D.underlines = 0; D.underline_texts = [];
+  document.addEventListener("selectionchange", () => {
+    const sel = getSelection();
+    if (!sel.rangeCount || sel.isCollapsed) { hl.style.display = "none"; return; }
+    const r = sel.getRangeAt(0);
+    const p1 = (r.startContainer.nodeType === 1 ? r.startContainer : r.startContainer.parentElement).closest(".para p");
+    const p2 = (r.endContainer.nodeType === 1 ? r.endContainer : r.endContainer.parentElement).closest(".para p");
+    hl.style.display = (p1 && p1 === p2 && $("#s-read").classList.contains("on")) ? "flex" : "none";
+  });
+  hl.addEventListener("mousedown", e => e.preventDefault());
+  function wrapSel(tag, cls){
+    const sel = getSelection(); if (!sel.rangeCount) return "";
+    const r = sel.getRangeAt(0); const txt = sel.toString().trim();
+    if (!txt) return "";
+    try { const m = document.createElement(tag); if (cls) m.className = cls; m.appendChild(r.extractContents()); r.insertNode(m); } catch(e) {}
+    sel.removeAllRanges(); hl.style.display = "none";
+    return txt.slice(0, 200);
+  }
+  $("#hl-mark").addEventListener("click", () => { const t = wrapSel("mark"); if (t) { D.highlights++; D.highlight_texts.push(t); } });
+  $("#hl-under").addEventListener("click", () => { const t = wrapSel("u", "ul"); if (t) { D.underlines++; D.underline_texts.push(t); } });
+
+  // блок 5: задания к фрагментам с обратной связью (фиксируется первый ответ)
+  CFG.wr.forEach((w,i) => {
+    $$(`input[name="wr${i}"]`).forEach(inp => inp.addEventListener("change", () => {
+      const right = String(inp.value === "T") === String(w[2]);
+      const fb = $("#fb" + i);
+      fb.className = "fb " + (right ? "ok" : "no");
+      fb.textContent = right ? "Верно." : "Неверно. Перечитайте абзац " + (w[0] + 1) + ".";
+      $$(`input[name="wr${i}"]`).forEach(x => x.disabled = true);
+    }));
+  });
+
+  // блок 2: содержание и индикатор прогресса
+  D.toc_opens = 0; D.toc_jumps = 0;
+  const toc = $("#toc");
+  $("#toc-btn").addEventListener("click", () => { toc.hidden = !toc.hidden; if (!toc.hidden) D.toc_opens++; });
+  $$("#toc a").forEach(a => a.addEventListener("click", ev => {
+    ev.preventDefault(); toc.hidden = true; D.toc_jumps++;
+    $("#sec" + a.dataset.sec).scrollIntoView({behavior: "smooth", block: "start"});
+  }));
+  const prog = $("#prog");
+  window.addEventListener("scroll", () => {
+    const art = $("#art"); if (!art || !$("#s-read").classList.contains("on")) return;
+    const r = art.getBoundingClientRect();
+    const done = Math.min(1, Math.max(0, (window.innerHeight - r.top) / r.height));
+    prog.style.width = Math.round(done * 100) + "%";
+  }, {passive: true});
+
+  // блок 3: изменение кегля
+  const SIZES = [16, 18, 20, 22]; let fsi = 1;
+  D.font_changes = 0; D.font_px_final = SIZES[fsi];
+  const wrap = $(".va .wrap");
+  function setFs(d){
+    const n = Math.max(0, Math.min(SIZES.length - 1, fsi + d)); if (n === fsi) return;
+    fsi = n; wrap.style.setProperty("--fs", SIZES[fsi] + "px"); D.font_changes++; D.font_px_final = SIZES[fsi];
+  }
+  $("#fs-minus").addEventListener("click", () => setFs(-1));
+  $("#fs-plus").addEventListener("click", () => setFs(1));
+} else {
+  // Вариант Б: глоссарий на отдельной «странице»
+  let savedY = 0;
+  const readMain = $("#read-main"), gloss = $("#gloss");
+  $$(".term-link").forEach(a => a.addEventListener("click", ev => {
+    ev.preventDefault();
+    const t = a.dataset.t; savedY = window.scrollY;
+    readMain.style.display = "none"; gloss.style.display = "block";
+    $$("#gloss dt").forEach(dt => dt.classList.toggle("cur", dt.dataset.t === t));
+    const dt = $(`#gloss dt[data-t="${CSS.escape(t)}"]`);
+    window.scrollTo(0, dt ? dt.getBoundingClientRect().top + window.scrollY - 20 : 0);
+    logGloss(t);
+  }));
+  $("#gloss-back").addEventListener("click", () => {
+    gloss.style.display = "none"; readMain.style.display = "block"; window.scrollTo(0, savedY);
+  });
+}
+
+// завершение чтения
+$("#b-finish").addEventListener("click", () => { $("#confirm").classList.add("on"); $("#b-finish").style.display = "none"; });
+$("#b-cancel").addEventListener("click", () => { $("#confirm").classList.remove("on"); $("#b-finish").style.display = ""; });
+$("#b-go").addEventListener("click", () => {
+  D.reading_ms = now() - tRead;
+  CFG.wr.forEach((w,i) => {
+    const c = document.querySelector(`input[name="wr${i}"]:checked`);
+    D["wr_" + (i+1)] = c ? c.value : "";
+    D["wr_" + (i+1) + "_ok"] = c ? (String(c.value === "T") === String(w[2]) ? 1 : 0) : "";
+  });
+  const notes = $$(".note").map(t => t.value.trim()).filter(Boolean);
+  D.notes_count = notes.length; D.notes_text = notes;
+  $("#pop").style.display = "none"; $("#hl").style.display = "none";
+  ["toc_opens","toc_jumps","font_changes","underlines","underline_texts"].forEach(k => { if (D[k] === undefined) D[k] = ""; });
+  if (D.font_px_final === undefined) D.font_px_final = "";
+  startTest();
+});
+
+// ---------- 4. тест ----------
+let tTest = 0;
+function startTest(){
+  $("#test-qs").innerHTML = CFG.test.map((q,i) => `
+    <div class="q" id="tq${i}"><div class="qt">${i+1}. ${esc(q.q)}</div>
+    ${q.o.map((o,j) => `<label class="opt"><input type="radio" name="t${i}" value="${j}"><span>${String.fromCharCode(97+j)}) ${esc(o)}</span></label>`).join("")}
+    </div>`).join("");
+  show("#s-test"); tTest = now();
+}
+$("#b-test").addEventListener("click", () => {
+  let miss = 0, first = null;
+  CFG.test.forEach((q,i) => {
+    const c = document.querySelector(`input[name="t${i}"]:checked`);
+    $("#tq"+i).classList.toggle("miss", !c);
+    if (!c) { miss++; if (first === null) first = i; }
+  });
+  if (miss) { $("#test-err").textContent = "Ответьте на все вопросы (без ответа: " + miss + ")."; $("#tq"+first).scrollIntoView({behavior:"smooth"}); return; }
+  D.test_ms = now() - tTest;
+  const sc = {F:0, C:0, T:0}; let total = 0;
+  CFG.test.forEach((q,i) => {
+    const v = +document.querySelector(`input[name="t${i}"]:checked`).value;
+    const ok = v === q.k ? 1 : 0;
+    D["q" + (i+1)] = String.fromCharCode(97+v); D["q" + (i+1) + "_ok"] = ok;
+    sc[q.p] += ok; total += ok;
+  });
+  D.score_total = total; D.score_factual = sc.F; D.score_completeness = sc.C; D.score_terms = sc.T;
+  show("#s-q");
+});
+
+// ---------- 5. анкета ----------
+const PAAS = ["очень-очень мало","очень мало","мало","скорее мало","ни мало, ни много","скорее много","много","очень много","очень-очень много"];
+$("#paas-opts").innerHTML = PAAS.map((l,i) => `<label class="opt"><input type="radio" name="paas" value="${i+1}"><span>${i+1} – ${l}</span></label>`).join("");
+$("#attr-scale").innerHTML = [1,2,3,4,5,6,7].map(n => `<label><input type="radio" name="attr" value="${n}">${n}</label>`).join("");
+// SUS. ВНИМАНИЕ: пункты 1-2 – формулировки из статьи Косовой Е.М., Глебко Н.Р., Горбуновой Е.С. (2024);
+// пункты 3-10 – ВРЕМЕННЫЙ перевод. Замените их официальной русской версией, которую авторы высылают по запросу.
+const SUS = [
+  "Я думаю, что мне хотелось бы часто использовать эту систему.",
+  "Система показалась мне излишне сложной.",
+  "Мне было легко пользоваться системой.",
+  "Думаю, мне понадобилась бы помощь специалиста, чтобы пользоваться этой системой.",
+  "Разные функции системы хорошо связаны между собой.",
+  "В системе слишком много несогласованности.",
+  "Думаю, большинство людей очень быстро научились бы пользоваться этой системой.",
+  "Пользоваться системой было очень неудобно.",
+  "Я чувствовал(а) себя уверенно, пользуясь системой.",
+  "Мне пришлось многое узнать, прежде чем я смог(ла) работать с этой системой."
+];
+$("#sus-qs").innerHTML = SUS.map((s,i) => `
+  <div class="q" id="sq${i}"><div class="qt">${i+1}. ${esc(s)}</div>
+  <div class="scale">${[1,2,3,4,5].map(n => `<label><input type="radio" name="sus${i}" value="${n}">${n}</label>`).join("")}</div>
+  <div class="ends"><span>1 – категорически не согласен</span><span>5 – категорически согласен</span></div></div>`).join("");
+
+$("#b-q").addEventListener("click", () => {
+  const need = ["paas","attr"].concat(SUS.map((s,i) => "sus"+i));
+  let miss = 0;
+  need.forEach(n => {
+    const c = document.querySelector(`input[name="${n}"]:checked`);
+    const box = n === "paas" ? $("#q-paas") : n === "attr" ? $("#q-attr") : $("#sq" + n.slice(3));
+    box.classList.toggle("miss", !c); if (!c) miss++;
+  });
+  if (miss) { $("#q-err").textContent = "Ответьте на все вопросы анкеты (без ответа: " + miss + ")."; return; }
+  D.paas = +document.querySelector('input[name="paas"]:checked').value;
+  D.attractiveness = +document.querySelector('input[name="attr"]:checked').value;
+  let sus = 0;
+  SUS.forEach((s,i) => {
+    const v = +document.querySelector(`input[name="sus${i}"]:checked`).value;
+    D["sus" + (i+1)] = v;
+    sus += (i % 2 === 0) ? (v - 1) : (5 - v);
+  });
+  D.sus_score = sus * 2.5;
+  D.total_ms = now() - T0;
+  D.finished_at = new Date().toISOString();
+  guard = false;
+  finish();
+});
+
+// ---------- 6. отправка ----------
+function flatten(o){ const r = {}; for (const k in o) r[k] = Array.isArray(o[k]) ? o[k].join(" | ") : o[k]; return r; }
+function queue(){ try { return JSON.parse(localStorage.getItem("rx_queue") || "[]"); } catch(e) { return []; } }
+function saveQueue(q){ try { localStorage.setItem("rx_queue", JSON.stringify(q)); } catch(e) {} }
+async function post(rec){
+  await fetch(ENDPOINT, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(rec)});
+}
+async function flush(){
+  if (!/^https:\/\/script\.google\.com\//.test(ENDPOINT)) return false;
+  let q = queue(), ok = true;
+  for (const rec of q.slice()) {
+    try { await post(rec); q = q.filter(x => x.session_id !== rec.session_id); saveQueue(q); }
+    catch(e) { ok = false; }
+  }
+  return ok;
+}
+async function finish(){
+  show("#s-done");
+  $("#done-score").textContent = "Ваш результат в тесте: " + D.score_total + " из 20.";
+  const rec = flatten(D);
+  const q = queue(); q.push(rec); saveQueue(q);
+  try { localStorage.setItem("rx_done_" + CFG.text_id + "_" + D.participant, "1"); } catch(e) {}
+  const st = $("#done-status");
+  if (!/^https:\/\/script\.google\.com\//.test(ENDPOINT)) {
+    st.textContent = "Адрес таблицы не настроен. Скачайте файл с ответами и передайте его преподавателю.";
+  } else {
+    const ok = await flush();
+    st.textContent = ok ? "Ответы отправлены. Можно закрыть страницу."
+                        : "Не удалось отправить ответы. Проверьте интернет и обновите страницу – ответы сохранены и отправятся автоматически. Или скачайте файл и передайте его преподавателю.";
+  }
+  const dl = $("#b-dl"); dl.style.display = "inline-block";
+  dl.onclick = () => {
+    const blob = new Blob([JSON.stringify(rec, null, 2)], {type:"application/json"});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+    a.download = `reading_${D.participant}_${CFG.text_id}_${CFG.variant}.json`; a.click();
+  };
+}
+// при открытии страницы дослать то, что не ушло в прошлый раз
+flush();
+window.__RX = D;
+})();
+</script>
+</body>
+</html>
