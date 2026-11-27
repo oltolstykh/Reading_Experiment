@@ -34,8 +34,9 @@ textarea{min-height:76px;resize:vertical}
 .ends{display:flex;justify-content:space-between;font-size:.82em;color:#555}
 .warn{background:#fff4e5;border:1px solid #f0b46a;border-radius:8px;padding:10px 12px;margin:10px 0;font-size:.92em}
 .err{color:#b00020;font-weight:600}
-.confirm{display:none;margin-top:14px}
-.confirm.on{display:block}
+.after{max-width:760px;margin:24px auto 0;padding:10px 16px 60px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:17px;line-height:1.5;color:#1d1d1f;background:#fff;border-top:3px solid #e3e3e8;text-align:left;text-indent:0}
+.after h2{font-size:1.15em;margin:1em 0 .4em}
+.ergo-blk{font-size:.8em;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.04em;margin-top:14px}
 
 /* ---------- Вариант А: эргономичное оформление ---------- */
 .va{max-width:none;padding:0}
@@ -122,7 +123,8 @@ textarea{min-height:76px;resize:vertical}
     <ol style="margin:.4em 0 0;padding-left:1.3em">
       <li>Три вопроса перед чтением.</li>
       <li>Чтение текста. Время не ограничено, читайте внимательно.</li>
-      <li>Тест из 20 вопросов. Во время теста текст будет недоступен.</li>
+      <li>Одна оценка того, насколько трудно было читать.</li>
+      <li>20 вопросов под текстом. К тексту можно возвращаться.</li>
       <li>Короткая анкета о том, как вам работалось со страницей.</li>
     </ol>
   </div>
@@ -158,27 +160,36 @@ textarea{min-height:76px;resize:vertical}
 <div class="wr-item">2. Many platforms require little more than a phone and an identity document.<div class="tf"><label><input type="radio" name="wr1" value="T"> True</label><label><input type="radio" name="wr1" value="F"> False</label></div></div>
 <div class="wr-item">3. All countries have reached the same conclusion about the status of gig workers.<div class="tf"><label><input type="radio" name="wr2" value="T"> True</label><label><input type="radio" name="wr2" value="F"> False</label></div></div>
 </div></article>
-<aside><div class="ab"><h3>Задание</h3>Прочитайте текст внимательно, чтобы полностью и точно понять его: основную мысль, аргументы автора, примеры и значения выделенных терминов. Возвращайтесь к фрагментам, которые показались трудными.</div><div class="ab"><h3>Did you know?</h3>Did you know? The word “economy” comes from the Greek word oikonomia, which originally meant the management of a household.</div></aside></div>
-<div class="finish-wrap"><button class="btn" id="b-finish" type="button">Я закончил(а) чтение</button><div class="confirm" id="confirm"><p>Перейти к тесту? Вернуться к тексту будет нельзя.</p><button class="btn" id="b-go" type="button">Да, перейти к тесту</button> <button class="btn sec" id="b-cancel" type="button">Продолжить чтение</button></div></div></div>
+<aside><div class="ab" id="setbox"><h3>Задание</h3>Прочитайте текст внимательно, чтобы полностью и точно понять его: основную мысль, аргументы автора, примеры и значения выделенных терминов. Возвращайтесь к фрагментам, которые показались трудными.</div><div class="ab"><h3>Did you know?</h3>Did you know? The word “economy” comes from the Greek word oikonomia, which originally meant the management of a household.</div></aside></div>
+<div class="finish-wrap"><button class="btn" id="b-finish" type="button">Я прочитал(а) текст – перейти к вопросам</button></div></div>
 <div id="gloss"><h2>Glossary</h2><dl><dt data-t="algorithmic management">algorithmic management</dt><dd>organising and controlling work with the help of computer programs instead of human managers (алгоритмическое управление)</dd><dt data-t="commission">commission</dt><dd>a percentage of the price that a company keeps for arranging a sale or service (комиссия)</dd><dt data-t="deactivation">deactivation</dt><dd>blocking a worker’s account so that they can no longer receive tasks on the platform (отключение от платформы)</dd><dt data-t="digital platform">digital platform</dt><dd>an online service or app that connects people who offer work with people who need it (цифровая платформа)</dd><dt data-t="employment status">employment status</dt><dd>the legal category of a working person, which decides what rights and protection they have (трудовой статус)</dd><dt data-t="income volatility">income volatility</dt><dd>the situation when the amount of money a person earns changes a lot from week to week (нестабильность дохода)</dd><dt data-t="independent contractors">independent contractors</dt><dd>people who work for themselves and are paid for separate tasks, not as employees (независимые подрядчики)</dd><dt data-t="scalability">scalability</dt><dd>the ability of a business to grow quickly without a large increase in costs (масштабируемость)</dd></dl><button class="btn sec" id="gloss-back" type="button">Вернуться к тексту</button></div>
-</section>
-
-<!-- 4. Тест -->
-<section class="screen" id="s-test">
-  <h1>Тест по тексту</h1>
-  <p class="muted">Выберите один вариант ответа в каждом вопросе. Текст во время теста недоступен.</p>
-  <div id="test-qs"></div>
-  <p id="test-err" class="err"></p>
-  <button class="btn" id="b-test">Отправить ответы теста</button>
+<div class="after" id="after">
+  <div id="paasbox" hidden>
+    <h2>Одна оценка перед вопросами</h2>
+    <div class="q" id="q-paas">
+      <div class="qt">Сколько умственных усилий потребовало от вас чтение этого текста?</div>
+      <div id="paas-opts"></div>
+    </div>
+    <p id="paas-err" class="err"></p>
+    <button class="btn" id="b-paas" type="button">Перейти к вопросам</button>
+  </div>
+  <div id="testzone" hidden>
+    <h2>Вопросы к тексту</h2>
+    <p class="muted">Выберите один вариант ответа в каждом вопросе. Текст находится выше: можно прокрутить страницу вверх и перечитать нужный фрагмент.</p>
+    <div id="test-qs"></div>
+    <p id="test-err" class="err"></p>
+    <button class="btn" id="b-test" type="button">Отправить ответы</button>
+  </div>
+</div>
 </section>
 
 <!-- 5. Анкета -->
 <section class="screen" id="s-q">
   <h1>Анкета</h1>
-  <div class="q" id="q-paas">
-    <div class="qt">Сколько умственных усилий потребовало от вас чтение этого текста?</div>
-    <div id="paas-opts"></div>
-  </div>
+  <h2>Как вам работалось с текстом</h2>
+  <p class="muted">Отметьте, насколько вы согласны с каждым утверждением о странице, с которой вы только что работали.</p>
+  <div id="ergo-qs"></div>
+  <h2>Внешний вид</h2>
   <div class="q" id="q-attr">
     <div class="qt">Насколько привлекательной внешне вам показалась страница с текстом?</div>
     <div class="scale" id="attr-scale"></div>
@@ -204,7 +215,7 @@ textarea{min-height:76px;resize:vertical}
 
 <script>
 /* ===== НАСТРОЙКА: вставьте сюда адрес веб-приложения Google Apps Script ===== */
-const ENDPOINT = "PASTE_APPS_SCRIPT_URL_HERE";
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbx3JnvjuF7nwaxzsycdjzC_AhsiT_x7pj2DD6XMPhisPc_trqPCYsYluQteuDDQWA8O/exec";
 /* ============================================================================ */
 const CFG = {"page_version": "2026-11-26", "text_id": "text2", "variant": "B", "group": 1, "pre": ["Have you or your friends ever earned money through an app (delivery, taxi, freelance work)?", "What are the advantages of working without a permanent contract?", "What risks can such work involve?"], "wr": [[1, "Platforms usually own the cars that drivers use.", false], [2, "Many platforms require little more than a phone and an identity document.", true], [4, "All countries have reached the same conclusion about the status of gig workers.", false]], "glossary": {"digital platform": ["an online service or app that connects people who offer work with people who need it", "цифровая платформа"], "commission": ["a percentage of the price that a company keeps for arranging a sale or service", "комиссия"], "independent contractors": ["people who work for themselves and are paid for separate tasks, not as employees", "независимые подрядчики"], "scalability": ["the ability of a business to grow quickly without a large increase in costs", "масштабируемость"], "income volatility": ["the situation when the amount of money a person earns changes a lot from week to week", "нестабильность дохода"], "algorithmic management": ["organising and controlling work with the help of computer programs instead of human managers", "алгоритмическое управление"], "deactivation": ["blocking a worker’s account so that they can no longer receive tasks on the platform", "отключение от платформы"], "employment status": ["the legal category of a working person, which decides what rights and protection they have", "трудовой статус"]}, "test": [{"p": "F", "q": "How do gig workers usually find their tasks?", "o": ["through newspaper adverts", "through their trade unions", "through digital platforms", "through employment agencies"], "k": 2}, {"p": "F", "q": "What does a platform company typically own?", "o": ["software that connects customers and workers", "the equipment that couriers need for work", "offices in every city where it operates", "the cars and restaurants that its workers use"], "k": 0}, {"p": "F", "q": "How does a platform earn money?", "o": ["It sells cars and bicycles to its workers.", "It charges workers a monthly membership fee.", "It receives regular grants from the government.", "It keeps a commission on each transaction."], "k": 3}, {"p": "F", "q": "According to supporters, who benefits from choosing working hours freely?", "o": ["students, parents and people with several jobs", "customers who often order meals late in the evening", "managers and owners of large digital platforms", "retired people who want to stay active"], "k": 0}, {"p": "F", "q": "How can platforms attract more drivers during busy hours?", "o": ["by hiring additional office staff", "by offering drivers permanent contracts", "by raising prices at those times", "by lowering customers’ ratings"], "k": 2}, {"p": "F", "q": "What may happen to a worker whose rating falls too low?", "o": ["They may become employees automatically.", "They may lose access to the platform.", "They may receive a higher commission.", "They may be sent on a training course."], "k": 1}, {"p": "F", "q": "What did the UK Supreme Court decide in 2021?", "o": ["Uber drivers are workers with minimum wage rights.", "Uber drivers are independent contractors, not workers.", "Platforms must pay pensions to their customers.", "Uber must stop operating in the United Kingdom."], "k": 0}, {"p": "F", "q": "What does the 2024 EU directive introduce?", "o": ["free accident insurance for every customer of a platform", "a presumption of employment when platforms control work", "a single minimum price for taxi rides in every EU country", "a complete ban on platforms that manage work by algorithm"], "k": 1}, {"p": "C", "q": "What is the main idea of the text?", "o": ["Gig work should be banned because it harms both workers and customers.", "Digital platforms cannot make a profit without public financial support.", "Gig work is flexible but risky, and its regulation is still developing.", "Traditional jobs with permanent contracts no longer exist in most countries."], "k": 2}, {"p": "C", "q": "Why does the author mention a permanent contract and one employer at the beginning?", "o": ["to contrast traditional careers with gig work", "to criticise employers who offer contracts", "to describe what an ideal job for students looks like", "to explain how platform algorithms work"], "k": 0}, {"p": "C", "q": "Why do platforms have low fixed costs?", "o": ["They pay much lower taxes than other companies.", "Their customers pay almost all the costs of the business.", "They do not pay for workers’ equipment or holidays.", "They use cheap software that is easy to copy."], "k": 2}, {"p": "C", "q": "What is the main purpose of the part about hidden costs?", "o": ["to describe the advantages for workers", "to report recent decisions of the courts", "to explain the disadvantages for workers", "to give practical advice to managers"], "k": 2}, {"p": "C", "q": "Why is income volatility a problem for gig workers?", "o": ["Gig workers have to pay unusually high income taxes.", "Earnings change with orders, so budgets are hard to plan.", "Prices for services stay the same for many years.", "Platforms usually pay their workers several months too late."], "k": 1}, {"p": "C", "q": "How is employment status connected with social protection?", "o": ["Employment status has no influence on the protection a worker gets.", "Employers protect employees; contractors protect themselves.", "Contractors receive more protection than employees do.", "The state provides the same protection to every worker."], "k": 1}, {"p": "C", "q": "Why does the author call the debate strategic for managers?", "o": ["New rules and public expectations may reduce profits.", "Most workers would prefer to work in an office.", "Algorithms are becoming too expensive to develop.", "Managers may have to start working as drivers themselves."], "k": 0}, {"p": "C", "q": "What does the author conclude?", "o": ["Platforms do not need any regulation at all.", "Work should combine flexibility with security.", "Platforms should fully replace traditional jobs.", "All gig workers must become full-time employees."], "k": 1}, {"p": "T", "q": "In the text, “scalability” means…", "o": ["the legal category that a gig worker belongs to", "a system that rates the quality of workers", "the ability to grow quickly at low extra cost", "a method for measuring the weight of goods"], "k": 2}, {"p": "T", "q": "In the text, “algorithmic management” means…", "o": ["management by people who studied mathematics", "control of work by an app instead of a manager", "a special type of accounting for small firms", "a training programme for new delivery drivers and couriers"], "k": 1}, {"p": "T", "q": "In the text, “deactivation” means…", "o": ["losing access to the platform", "switching off a smartphone", "a sudden reduction in pay", "the end of a working shift"], "k": 0}, {"p": "T", "q": "In the text, “independent contractor” means…", "o": ["a person who works for themselves", "a manager employed by a platform", "a member of a workers’ trade union", "an inspector working for the state"], "k": 0}]};
 </script>
@@ -272,16 +283,27 @@ $("#b-pre").addEventListener("click", () => {
 
 // ---------- 3. чтение ----------
 let tRead = 0;
-D.returns = 0; D.max_scroll_pct = 0; D.glossary_opens = 0; D.glossary_terms = [];
+D.returns_read = 0; D.returns_test = 0; D.max_scroll_pct = 0; D.glossary_opens = 0; D.glossary_terms = [];
 D.highlights = 0; D.highlight_texts = [];
 function startReading(){
   show("#s-read");
   tRead = now();
   trackParagraphs();
+  trackDwell();
+  trackSetBox();
   window.addEventListener("scroll", onScroll, {passive:true});
 }
+// Блок 2.5: попала ли установка на чтение в поле зрения (не меньше половины блока) и сколько времени была видна
+D.set_seen = 0; D.set_visible_ms = 0; let setT = null;
+function trackSetBox(){
+  const box = $("#setbox"); if (!box) return;
+  new IntersectionObserver(en => en.forEach(x => {
+    if (x.intersectionRatio >= 0.5) { D.set_seen = 1; if (setT === null) setT = now(); }
+    else if (setT !== null) { D.set_visible_ms += now() - setT; setT = null; }
+  }), {threshold: [0, 0.5, 1]}).observe(box);
+}
 function onScroll(){
-  if (!$("#s-read").classList.contains("on")) return;
+  if (!$("#s-read").classList.contains("on") || bucket !== "read") return;
   const art = $("#art"); if (!art || art.offsetParent === null) return;
   const r = art.getBoundingClientRect();
   const seen = Math.min(r.height, Math.max(0, window.innerHeight - r.top));
@@ -295,15 +317,55 @@ function trackParagraphs(){
     entries.forEach(en => {
       const el = en.target, st = state.get(el) || "unseen";
       if (en.isIntersecting) {
-        if (st === "passed") { D.returns++; }
+        if (st === "passed") {
+          const i = paras.indexOf(el);
+          if (bucket === "read") { D.returns_read++; } else { D.returns_test++; }
+          retByPara[bucket][i]++;
+        }
         state.set(el, "seen");
       } else if (st === "seen" && en.boundingClientRect.top < 0 && en.boundingClientRect.height > 0) {
         state.set(el, "passed");
       }
     });
   }, {threshold: 0});
-  $$("#art .para").forEach(p => io.observe(p));
+  paras.forEach(p => io.observe(p));
 }
+
+// Фазы: "read" – чтение до кнопки «Я прочитал(а) текст», "test" – оценка Paas и ответы на вопросы.
+let bucket = "read";
+let paras = [];
+const dwell = {read: [], test: []}, retByPara = {read: [], test: []};
+const figDwell = {read: 0, test: 0};
+// Время в поле зрения: абзац (или иллюстрация) пересекает центральную полосу экрана (40% высоты).
+const active = new Map(); let paused = false;
+function addDwell(el, ms){
+  if (el.tagName === "FIGURE") figDwell[bucket] += ms;
+  else { const i = paras.indexOf(el); if (i >= 0) dwell[bucket][i] += ms; }
+}
+function trackDwell(){
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      const el = en.target;
+      if (en.isIntersecting) { active.set(el, now()); }
+      else if (active.has(el)) { if (!paused) addDwell(el, now() - active.get(el)); active.delete(el); }
+    });
+  }, {rootMargin: "-30% 0px -30% 0px", threshold: 0});
+  paras.forEach(p => io.observe(p));
+  $$("#s-read figure").forEach(f => io.observe(f));
+}
+function flushDwell(){ if (paused) return; const t = now(); active.forEach((st, el) => { addDwell(el, t - st); active.set(el, t); }); }
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) { flushDwell(); paused = true; }
+  else { const t = now(); active.forEach((st, el) => active.set(el, t)); paused = false; }
+});
+function setBucket(b){ flushDwell(); bucket = b; }
+paras = $$("#art .para");
+paras.forEach(() => { dwell.read.push(0); dwell.test.push(0); retByPara.read.push(0); retByPara.test.push(0); });
+
+// Время работы с глоссарием (всплывающая подсказка в А, отдельная страница в Б)
+D.gloss_ms = 0; let glossT = null;
+function glossStart(){ if (glossT !== null) D.gloss_ms += now() - glossT; glossT = now(); }
+function glossStop(){ if (glossT !== null) { D.gloss_ms += now() - glossT; glossT = null; } }
 
 // глоссарий
 function glossEntry(t){ const g = CFG.glossary[t]; return {en: g[0], ru: g[1]}; }
@@ -322,10 +384,10 @@ if (CFG.variant === "A") {
     left = Math.max(8, Math.min(left, window.scrollX + document.documentElement.clientWidth - w - 8));
     pop.style.left = left + "px";
     pop.style.top = (r.bottom + window.scrollY + 6) + "px";
-    pop.querySelector(".x").onclick = () => pop.style.display = "none";
-    logGloss(t);
+    pop.querySelector(".x").onclick = () => { pop.style.display = "none"; glossStop(); };
+    logGloss(t); glossStart();
   }));
-  document.addEventListener("click", e => { if (!pop.contains(e.target)) pop.style.display = "none"; });
+  document.addEventListener("click", e => { if (!pop.contains(e.target) && pop.style.display === "block") { pop.style.display = "none"; glossStop(); } });
 
   // заметки
   $$(".note-btn").forEach(b => b.addEventListener("click", () => {
@@ -399,22 +461,22 @@ if (CFG.variant === "A") {
   $$(".term-link").forEach(a => a.addEventListener("click", ev => {
     ev.preventDefault();
     const t = a.dataset.t; savedY = window.scrollY;
-    readMain.style.display = "none"; gloss.style.display = "block";
+    readMain.style.display = "none"; $("#after").style.display = "none"; gloss.style.display = "block";
     $$("#gloss dt").forEach(dt => dt.classList.toggle("cur", dt.dataset.t === t));
     const dt = $(`#gloss dt[data-t="${CSS.escape(t)}"]`);
     window.scrollTo(0, dt ? dt.getBoundingClientRect().top + window.scrollY - 20 : 0);
-    logGloss(t);
+    logGloss(t); glossStart();
   }));
   $("#gloss-back").addEventListener("click", () => {
-    gloss.style.display = "none"; readMain.style.display = "block"; window.scrollTo(0, savedY);
+    glossStop();
+    gloss.style.display = "none"; readMain.style.display = "block"; $("#after").style.display = ""; window.scrollTo(0, savedY);
   });
 }
 
-// завершение чтения
-$("#b-finish").addEventListener("click", () => { $("#confirm").classList.add("on"); $("#b-finish").style.display = "none"; });
-$("#b-cancel").addEventListener("click", () => { $("#confirm").classList.remove("on"); $("#b-finish").style.display = ""; });
-$("#b-go").addEventListener("click", () => {
+// завершение чтения: текст остаётся на странице, ниже появляются оценка Paas и вопросы
+$("#b-finish").addEventListener("click", () => {
   D.reading_ms = now() - tRead;
+  if (setT !== null) { D.set_visible_ms += now() - setT; setT = null; }
   CFG.wr.forEach((w,i) => {
     const c = document.querySelector(`input[name="wr${i}"]:checked`);
     D["wr_" + (i+1)] = c ? c.value : "";
@@ -422,9 +484,21 @@ $("#b-go").addEventListener("click", () => {
   });
   const notes = $$(".note").map(t => t.value.trim()).filter(Boolean);
   D.notes_count = notes.length; D.notes_text = notes;
-  $("#pop").style.display = "none"; $("#hl").style.display = "none";
+  $("#pop").style.display = "none"; $("#hl").style.display = "none"; glossStop();
   ["toc_opens","toc_jumps","font_changes","underlines","underline_texts"].forEach(k => { if (D[k] === undefined) D[k] = ""; });
   if (D.font_px_final === undefined) D.font_px_final = "";
+  D.gloss_read_ms = D.gloss_ms; D.glossary_opens_read = D.glossary_opens;
+  setBucket("test");
+  $("#b-finish").style.display = "none";
+  $("#paasbox").hidden = false;
+  $("#paasbox").scrollIntoView({behavior: "smooth", block: "start"});
+});
+$("#b-paas").addEventListener("click", () => {
+  const c = document.querySelector('input[name="paas"]:checked');
+  $("#q-paas").classList.toggle("miss", !c);
+  if (!c) { $("#paas-err").textContent = "Выберите один вариант."; return; }
+  D.paas = +c.value;
+  $("#paasbox").hidden = true;
   startTest();
 });
 
@@ -435,7 +509,9 @@ function startTest(){
     <div class="q" id="tq${i}"><div class="qt">${i+1}. ${esc(q.q)}</div>
     ${q.o.map((o,j) => `<label class="opt"><input type="radio" name="t${i}" value="${j}"><span>${String.fromCharCode(97+j)}) ${esc(o)}</span></label>`).join("")}
     </div>`).join("");
-  show("#s-test"); tTest = now();
+  $("#testzone").hidden = false;
+  $("#testzone").scrollIntoView({behavior: "smooth", block: "start"});
+  tTest = now();
 }
 $("#b-test").addEventListener("click", () => {
   let miss = 0, first = null;
@@ -454,12 +530,51 @@ $("#b-test").addEventListener("click", () => {
     sc[q.p] += ok; total += ok;
   });
   D.score_total = total; D.score_factual = sc.F; D.score_completeness = sc.C; D.score_terms = sc.T;
+  // итоги замеров по абзацам, иллюстрации и глоссарию
+  flushDwell(); glossStop(); paused = true;
+  let rd = 0, ts = 0;
+  paras.forEach((p,i) => {
+    D["p" + (i+1) + "_read_ms"] = dwell.read[i]; D["p" + (i+1) + "_test_ms"] = dwell.test[i];
+    D["p" + (i+1) + "_returns_read"] = retByPara.read[i]; D["p" + (i+1) + "_returns_test"] = retByPara.test[i];
+    rd += dwell.read[i]; ts += dwell.test[i];
+  });
+  D.text_visible_read_ms = rd; D.text_visible_test_ms = ts;
+  D.fig_read_ms = figDwell.read; D.fig_test_ms = figDwell.test;
+  D.gloss_test_ms = D.gloss_ms - (D.gloss_read_ms || 0);
+  D.glossary_opens_test = D.glossary_opens - (D.glossary_opens_read || 0);
   show("#s-q");
 });
 
 // ---------- 5. анкета ----------
 const PAAS = ["очень-очень мало","очень мало","мало","скорее мало","ни мало, ни много","скорее много","много","очень много","очень-очень много"];
 $("#paas-opts").innerHTML = PAAS.map((l,i) => `<label class="opt"><input type="radio" name="paas" value="${i+1}"><span>${i+1} – ${l}</span></label>`).join("");
+// Авторская анкета эргономичности страницы: по 2-4 утверждения на каждый блок характеристик 1-5.
+// r: 1 – обратный пункт (балл пересчитывается как 6 - ответ).
+const ERGO = [
+  {b:1, r:0, s:"Страница выглядела аккуратно и приятно."},
+  {b:1, r:1, s:"Оформление страницы отвлекало меня от текста."},
+  {b:2, r:0, s:"Я всегда понимал(а), в какой части текста нахожусь."},
+  {b:2, r:0, s:"Мне было легко вернуться к нужному месту в тексте."},
+  {b:2, r:0, s:"Я сразу заметил(а) задание к тексту."},
+  {b:2, r:0, s:"Пояснения к терминам было удобно открывать."},
+  {b:3, r:0, s:"Текст было легко читать с экрана моего устройства."},
+  {b:3, r:1, s:"От чтения с экрана у меня уставали глаза."},
+  {b:3, r:0, s:"Размер шрифта и расстояние между строками были удобными."},
+  {b:4, r:0, s:"Было понятно, из каких частей состоит текст."},
+  {b:4, r:0, s:"Схема и задания находились там, где они были нужны."},
+  {b:4, r:1, s:"На странице было много лишнего."},
+  {b:5, r:0, s:"Мне хватало возможностей, чтобы работать с текстом (выделять, отмечать, проверять себя)."},
+  {b:5, r:0, s:"Задания по ходу чтения помогли мне понять текст."},
+  {b:0, r:0, s:"Я хотел(а) бы читать учебные тексты в таком оформлении."}
+];
+const BLK = {1:"Внешний вид", 2:"Навигация", 3:"Шрифт и читаемость", 4:"Расположение элементов", 5:"Инструменты", 0:"В целом"};
+let lastB = null;
+$("#ergo-qs").innerHTML = ERGO.map((q,i) => {
+  const head = ""; // подписи блоков студентам не показываем, чтобы не подсказывать, что оценивается
+  return `${head}<div class="q" id="eq${i}"><div class="qt">${i+1}. ${esc(q.s)}</div>
+  <div class="scale">${[1,2,3,4,5].map(n => `<label><input type="radio" name="ergo${i}" value="${n}">${n}</label>`).join("")}</div>
+  <div class="ends"><span>1 – совсем не согласен</span><span>5 – полностью согласен</span></div></div>`;
+}).join("");
 $("#attr-scale").innerHTML = [1,2,3,4,5,6,7].map(n => `<label><input type="radio" name="attr" value="${n}">${n}</label>`).join("");
 // SUS. ВНИМАНИЕ: пункты 1-2 – формулировки из статьи Косовой Е.М., Глебко Н.Р., Горбуновой Е.С. (2024);
 // пункты 3-10 – ВРЕМЕННЫЙ перевод. Замените их официальной русской версией, которую авторы высылают по запросу.
@@ -481,16 +596,25 @@ $("#sus-qs").innerHTML = SUS.map((s,i) => `
   <div class="ends"><span>1 – категорически не согласен</span><span>5 – категорически согласен</span></div></div>`).join("");
 
 $("#b-q").addEventListener("click", () => {
-  const need = ["paas","attr"].concat(SUS.map((s,i) => "sus"+i));
+  const need = ERGO.map((q,i) => "ergo"+i).concat(["attr"]).concat(SUS.map((s,i) => "sus"+i));
   let miss = 0;
   need.forEach(n => {
     const c = document.querySelector(`input[name="${n}"]:checked`);
-    const box = n === "paas" ? $("#q-paas") : n === "attr" ? $("#q-attr") : $("#sq" + n.slice(3));
+    const box = n === "attr" ? $("#q-attr") : n.startsWith("ergo") ? $("#eq" + n.slice(4)) : $("#sq" + n.slice(3));
     box.classList.toggle("miss", !c); if (!c) miss++;
   });
   if (miss) { $("#q-err").textContent = "Ответьте на все вопросы анкеты (без ответа: " + miss + ")."; return; }
-  D.paas = +document.querySelector('input[name="paas"]:checked').value;
   D.attractiveness = +document.querySelector('input[name="attr"]:checked').value;
+  const sums = {}, cnt = {}; let all = 0, n = 0;
+  ERGO.forEach((q,i) => {
+    const v = +document.querySelector(`input[name="ergo${i}"]:checked`).value;
+    const s = q.r ? 6 - v : v;
+    D["ergo" + (i+1)] = v;
+    if (q.b) { sums[q.b] = (sums[q.b] || 0) + s; cnt[q.b] = (cnt[q.b] || 0) + 1; all += s; n++; }
+    else D.ergo_overall = v;
+  });
+  [1,2,3,4,5].forEach(b => D["ergo_block" + b] = Math.round(100 * sums[b] / cnt[b]) / 100);
+  D.ergo_total = Math.round(100 * all / n) / 100;
   let sus = 0;
   SUS.forEach((s,i) => {
     const v = +document.querySelector(`input[name="sus${i}"]:checked`).value;
