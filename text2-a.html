@@ -2,94 +2,208 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
 <title>Reading – Text 2</title>
 <style>
-/* ---------- Общие экраны (одинаковы в вариантах А и Б) ---------- */
+/* =====================================================================
+   Общие экраны (старт, перед чтением, задания после чтения, анкета, конец)
+   одинаковы в вариантах А и Б: нейтральная серо-синяя гамма.
+   ===================================================================== */
+:root{
+  --n-bg:#f2f3f5; --n-sheet:#ffffff; --n-ink:#1f2328; --n-muted:#5b6570; --n-line:#d8dde3;
+  --n-acc:#2e4a64; --n-acc-2:#243b50; --n-wash:#e8eef4; --n-err:#b3261e; --n-ok:#1f6b45;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#1d1d1f;background:#fff}
-.screen{display:none;max-width:760px;margin:0 auto;padding:20px 16px 60px;font-size:17px;line-height:1.5}
+body{margin:0;font-family:var(--sans);color:var(--n-ink);background:var(--n-bg);-webkit-font-smoothing:antialiased}
+body[data-screen="s-read"]{background:#fff}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid #6d8fb0;outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+.screen{display:none}
 .screen.on{display:block}
-.screen h1{font-size:1.35em;line-height:1.25;margin:.2em 0 .6em}
-.screen h2{font-size:1.1em;margin:1.4em 0 .5em}
-.muted{color:#555;font-size:.92em}
-.box{border:1px solid #d9d9de;border-radius:10px;padding:14px 16px;margin:14px 0;background:#fafafc}
-label.blk{display:block;margin:.8em 0 .3em;font-weight:600}
-input[type=text],textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid #b8b8c0;border-radius:8px;background:#fff}
-textarea{min-height:76px;resize:vertical}
-.btn{display:inline-block;font:inherit;font-weight:600;padding:12px 20px;border-radius:10px;border:0;background:#1f5fbf;color:#fff;cursor:pointer;margin-top:16px}
-.btn[disabled]{background:#9db3d6;cursor:not-allowed}
-.btn.sec{background:#e9e9ee;color:#1d1d1f}
-.chk{display:flex;gap:10px;align-items:flex-start;margin:12px 0}
-.chk input{margin-top:5px;width:20px;height:20px;flex:none}
-.q{border-top:1px solid #e3e3e8;padding:14px 0}
-.q .qt{font-weight:600;margin-bottom:8px}
-.q.miss .qt{color:#b00020}
-.opt{display:flex;gap:10px;align-items:flex-start;padding:7px 4px;border-radius:8px;cursor:pointer}
-.opt input{margin-top:4px;width:19px;height:19px;flex:none}
-.scale{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
-.scale label{flex:1 0 44px;text-align:center;border:1px solid #c9c9d1;border-radius:8px;padding:8px 0;cursor:pointer;min-width:40px}
-.scale input{display:block;margin:0 auto 2px}
-.ends{display:flex;justify-content:space-between;font-size:.82em;color:#555}
-.warn{background:#fff4e5;border:1px solid #f0b46a;border-radius:8px;padding:10px 12px;margin:10px 0;font-size:.92em}
-.err{color:#b00020;font-weight:600}
-.after{max-width:760px;margin:24px auto 0;padding:10px 16px 60px;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:17px;line-height:1.5;color:#1d1d1f;background:#fff;border-top:3px solid #e3e3e8;text-align:left;text-indent:0}
-.after h2{font-size:1.15em;margin:1em 0 .4em}
-.ergo-blk{font-size:.8em;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.04em;margin-top:14px}
+.sheet{max-width:640px;margin:0 auto;padding:22px 18px 72px;font-size:17px;line-height:1.55}
+@media (min-width:700px){.sheet{margin:32px auto;padding:36px 40px 48px;background:var(--n-sheet);border-radius:18px;border:1px solid var(--n-line)}}
+@media (max-width:699px){body:not([data-screen="s-read"]) .screen.on{background:var(--n-sheet);min-height:100vh}}
 
-/* ---------- Вариант А: эргономичное оформление ---------- */
-.va{max-width:none;padding:0}
-.va .wrap{max-width:31em;margin:0 auto;padding:20px 18px 80px;font-size:var(--fs,18px);line-height:1.5;color:#1a1a1a;background:#fff}
-.va .kick{font-size:.72em;letter-spacing:.08em;text-transform:uppercase;color:#1f5fbf;font-weight:700}
-.va .para p{margin:0 0 .5em}
-.va .para{margin-bottom:.6em}
-.va h1{font-size:1.4em;line-height:1.25;margin:.2em 0 .5em}
-.va .set{border-left:4px solid #1f5fbf;background:#f1f5fc;padding:12px 14px;margin:0 0 22px;border-radius:0 8px 8px 0;font-size:.92em}
-.va .set b{display:block;margin-bottom:4px}
-.va h2{font-size:1.08em;margin:1.5em 0 .4em}
-.va .para{position:relative;padding-left:1.9em}
-.va .pnum{position:absolute;left:0;top:.05em;font-size:.75em;font-weight:700;color:#1f5fbf;background:#e8eefb;border-radius:6px;padding:1px 6px}
-.va .para p{margin:0 0 .4em;text-align:left}
-.va .term{font:inherit;color:inherit;background:none;border:0;padding:0;border-bottom:2px dotted #1f5fbf;cursor:pointer;line-height:inherit}
-.va .note-btn{font-size:.78em;background:none;border:1px solid #c5cfe3;color:#1f5fbf;border-radius:6px;padding:3px 9px;cursor:pointer;margin:2px 0 6px}
-.va .note{display:block;font-size:.85em;min-height:60px;margin-bottom:8px}
-.va .wr-card{border:1px solid #d4dcec;border-radius:10px;padding:10px 14px;margin:12px 0 4px 1.9em;font-size:.9em;background:#fbfcff}
-.va .wr-card .ttl{font-weight:700;color:#1f5fbf;font-size:.85em;text-transform:uppercase;letter-spacing:.03em}
-.va mark{background:#ffe680;padding:0 1px}
-#pop{position:absolute;z-index:20;display:none;max-width:min(92vw,26em);background:#fff;border:1px solid #c5cfe3;box-shadow:0 6px 24px rgba(0,0,0,.15);border-radius:10px;padding:12px 14px;font-size:16px;line-height:1.45}
-#pop .tr{color:#555;margin-top:4px}
-#pop .x{float:right;border:0;background:none;font-size:20px;line-height:1;cursor:pointer;color:#555;margin:-4px -4px 0 6px}
-#hl{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:30;display:none;gap:4px;padding:5px;border-radius:26px;background:#1a1a1a;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-#hl button{font:inherit;font-weight:600;font-size:15px;padding:9px 14px;border-radius:20px;border:0;background:transparent;color:#fff;cursor:pointer}
-#hl button+button{border-left:1px solid #555;border-radius:0 20px 20px 0}
-.va u.ul{text-decoration:underline;text-decoration-color:#1f5fbf;text-decoration-thickness:2px;text-underline-offset:3px}
-.va .hint{font-size:.8em;color:#555;margin:10px 0 0}
-/* блок 2: навигация – верхняя панель, содержание, индикатор прогресса */
-.va .topbar{position:sticky;top:0;z-index:15;background:#fff;border-bottom:1px solid #e3e7ef}
-.va .topbar .in{max-width:31em;margin:0 auto;padding:8px 18px;display:flex;align-items:center;gap:8px;font-size:15px}
-.va .topbar .lbl{flex:1;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.va .tb{font:inherit;font-size:14px;font-weight:600;border:1px solid #c5cfe3;background:#fff;color:#1f5fbf;border-radius:8px;padding:6px 10px;cursor:pointer}
-.va .prog{height:4px;background:#e8eefb}
-.va .prog div{height:4px;width:0;background:#1f5fbf;transition:width .15s}
-.va #toc{max-width:31em;margin:0 auto;padding:6px 18px 12px;font-size:15px;border-bottom:1px solid #e3e7ef;background:#fff}
-.va #toc ol{margin:0;padding-left:1.4em}
-.va #toc a{color:#1f5fbf;text-decoration:none;display:block;padding:5px 0}
-.va section.sec{scroll-margin-top:64px}
-/* блок 4: иллюстрация рядом с фрагментом */
-.va figure,.vb figure{margin:14px 0 18px}
-.va figure{margin-left:1.9em}
-.va figure svg,.vb figure svg{width:100%;max-width:440px;height:auto;display:block}
-.va figcaption{font-size:.8em;color:#444;margin-top:6px}
-.vb figure{max-width:440px}
-.vb figcaption{font-size:12px;font-style:italic;margin-top:4px}
-/* блок 5: обратная связь к заданиям */
-.va .fb{margin-top:6px;font-weight:600}
-.va .fb.ok{color:#1b7a3a}
-.va .fb.no{color:#b00020}
+/* индикатор шагов: работа действительно идёт по шагам */
+.steps{display:flex;gap:6px;margin:0 0 6px}
+.steps i{flex:1;height:4px;border-radius:2px;background:var(--n-line)}
+.steps i.done{background:var(--n-acc)}
+.stepnum{font-size:.8em;color:var(--n-muted);margin:0 0 18px}
 
-/* ---------- Вариант Б: традиционный цифровой формат ---------- */
-.vb{max-width:none;padding:0;background:#fdfdfd}
+.sheet h1{font-size:1.6em;line-height:1.18;letter-spacing:-.012em;margin:0 0 .5em;font-weight:700}
+.sheet h2{font-size:1.15em;line-height:1.3;margin:1.8em 0 .4em;font-weight:700}
+.lead{font-size:1.06em;margin:0 0 1em}
+.muted{color:var(--n-muted);font-size:.92em}
+.plan{list-style:none;margin:18px 0;padding:0;counter-reset:st}
+.plan li{counter-increment:st;display:grid;grid-template-columns:2em 1fr;gap:4px 10px;padding:9px 0;border-top:1px solid var(--n-line)}
+.plan li:last-child{border-bottom:1px solid var(--n-line)}
+.plan li::before{content:counter(st);font-weight:700;color:var(--n-acc);font-variant-numeric:tabular-nums}
+.plan li span{color:var(--n-muted);font-size:.9em;grid-column:2}
+
+label.blk{display:block;margin:1.2em 0 .4em;font-weight:600}
+input[type=text],textarea,select{width:100%;padding:12px 14px;border:1.5px solid var(--n-line);border-radius:12px;background:#fff;font-size:17px}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--n-acc);outline:none;box-shadow:0 0 0 3px var(--n-wash)}
+textarea{min-height:84px;resize:vertical;line-height:1.45}
+
+.btn{display:block;width:100%;min-height:52px;font-weight:650;font-size:17px;padding:14px 22px;border-radius:14px;border:0;background:var(--n-acc);color:#fff;cursor:pointer;margin-top:22px;text-align:center}
+.btn:hover{background:var(--n-acc-2)}
+.btn[disabled]{background:#aab6c2;cursor:not-allowed}
+.btn.sec{background:var(--n-wash);color:var(--n-acc)}
+@media (min-width:700px){.btn{display:inline-block;width:auto;min-width:240px}}
+.linkbtn{background:none;border:0;padding:6px 0;color:var(--n-acc);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+.chk{display:flex;gap:12px;align-items:flex-start;margin:18px 0 0;padding:14px;border:1.5px solid var(--n-line);border-radius:14px;cursor:pointer}
+.chk input{margin:3px 0 0;width:22px;height:22px;flex:none;accent-color:var(--n-acc)}
+.chk.sel{border-color:var(--n-acc);background:var(--n-wash)}
+
+/* вопрос анкеты */
+.q{padding:18px 0;border-top:1px solid var(--n-line)}
+.q .qt{font-weight:600;margin-bottom:12px}
+.q.miss .qt,.task.miss .task-h{color:var(--n-err)}
+.q.miss .qt::after,.task.miss .task-h::after{content:" – нужен ответ";font-weight:500;font-size:.85em}
+
+/* варианты ответа: строка-выбор */
+.choice{display:flex;gap:12px;align-items:center;padding:11px 14px;margin:6px 0;border:1.5px solid var(--n-line);border-radius:12px;cursor:pointer;background:#fff}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice .nb{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--n-line);display:grid;place-items:center;font-size:.85em;font-weight:700;color:var(--n-muted);font-variant-numeric:tabular-nums}
+.choice.sel{border-color:var(--n-acc);background:var(--n-wash)}
+.choice.sel .nb{background:var(--n-acc);border-color:var(--n-acc);color:#fff}
+
+/* шкала 1-5 и 1-7 */
+.scale{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px}
+.scale label{position:relative;display:grid;place-items:center;min-height:48px;border:1.5px solid var(--n-line);border-radius:12px;cursor:pointer;font-weight:650;font-variant-numeric:tabular-nums;background:#fff}
+.scale input{position:absolute;opacity:0;pointer-events:none}
+.scale label.sel{background:var(--n-acc);border-color:var(--n-acc);color:#fff}
+.ends{display:flex;justify-content:space-between;gap:12px;font-size:.8em;color:var(--n-muted);margin-top:6px}
+.ends span:last-child{text-align:right}
+
+.warn{background:#fff6e6;border:1px solid #e9b867;border-radius:12px;padding:12px 14px;margin:12px 0;font-size:.92em}
+.err{color:var(--n-err);font-weight:600;margin:14px 0 0}
+.err:empty{display:none}
+
+/* ---------- блок под текстом: оценка усилий и задания после чтения ---------- */
+.after{font-family:var(--sans);font-size:17px;line-height:1.55;color:var(--n-ink);background:var(--n-bg);text-align:left;text-indent:0;padding:28px 0 0}
+.after .sheet{background:var(--n-sheet)}
+@media (max-width:699px){.after .sheet{border-top:1px solid var(--n-line)}}
+.va .after .task,.va .after .sheet{scroll-margin-top:64px}
+.task{padding:26px 0 8px;border-top:1px solid var(--n-line);margin-top:22px}
+.task:first-of-type{border-top:0;margin-top:0}
+.task-h{font-size:1.12em;font-weight:700;margin:0 0 4px}
+.task-h small{display:block;font-size:.72em;font-weight:600;color:var(--n-muted);margin-bottom:2px}
+.task .how{color:var(--n-muted);font-size:.92em;margin:0 0 14px}
+/* план: нажатие присваивает следующий номер */
+.ord{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:12px 14px;margin:6px 0;border:1.5px solid var(--n-line);border-radius:12px;background:#fff;cursor:pointer;line-height:1.4}
+.ord .nb{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px dashed #aab6c2;display:grid;place-items:center;font-weight:700;font-variant-numeric:tabular-nums;color:#fff}
+.ord.on{border-color:var(--n-acc);background:var(--n-wash)}
+.ord.on .nb{background:var(--n-acc);border:0}
+/* True / False / Not stated – сегментированный выбор */
+.st{margin:16px 0 0}
+.st p{margin:0 0 8px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--n-line);border-radius:12px;overflow:hidden}
+.seg label{position:relative;display:grid;place-items:center;min-height:44px;padding:4px;text-align:center;font-size:.9em;font-weight:600;cursor:pointer;background:#fff;line-height:1.2}
+.seg label+label{border-left:1.5px solid var(--n-line)}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label.sel{background:var(--n-acc);color:#fff}
+/* причины и следствия */
+.ce{margin:16px 0 0}
+.ce p{margin:0 0 6px;font-weight:600}
+select{appearance:none;-webkit-appearance:none;padding-right:40px;background-image:linear-gradient(45deg,transparent 50%,#5b6570 50%),linear-gradient(135deg,#5b6570 50%,transparent 50%);background-position:calc(100% - 20px) 52%,calc(100% - 14px) 52%;background-size:6px 6px;background-repeat:no-repeat;line-height:1.3}
+select.empty{color:var(--n-muted)}
+/* краткое изложение с пропусками */
+.bank{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px;padding:0;list-style:none}
+.bank li{padding:5px 11px;border-radius:999px;background:var(--n-wash);color:var(--n-acc);font-size:.88em;font-weight:600}
+.sum{line-height:2.25}
+.sum select{display:inline-block;width:auto;max-width:100%;padding:4px 34px 4px 10px;border-radius:9px;font-size:.95em;background-position:calc(100% - 16px) 52%,calc(100% - 10px) 52%;vertical-align:baseline}
+.sum .gn{font-size:.75em;font-weight:700;color:var(--n-muted);margin-right:2px}
+.wc{font-size:.85em;color:var(--n-muted);margin-top:6px}
+
+/* =====================================================================
+   Вариант А – эргономичное оформление (блоки 1-5 табл. 2)
+   Одна гарнитура (системный шрифт без засечек), один акцентный цвет.
+   ===================================================================== */
+.va{--ink:#1c2320;--muted:#56635d;--line:#dce4e0;--acc:#1d6a50;--acc-2:#165540;--wash:#e7f1ec;--mark:#fbe38e;background:#fff;color:var(--ink)}
+.va .topbar{position:sticky;top:0;z-index:15;background:rgba(255,255,255,.94);-webkit-backdrop-filter:saturate(1.4) blur(10px);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.va .topbar .in{max-width:34em;margin:0 auto;padding:6px 12px 6px 20px;display:flex;align-items:center;gap:2px;font-size:15px;min-height:52px}
+.va .topbar .lbl{flex:1;min-width:0;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.va .tb{min-height:44px;min-width:44px;padding:0 10px;border:0;background:none;color:var(--acc);font-weight:650;font-size:15px;border-radius:10px;cursor:pointer}
+.va .tb:hover{background:var(--wash)}
+.va .tb[aria-expanded="true"]{background:var(--wash)}
+.va .prog{height:3px;background:transparent}
+.va .prog div{height:3px;width:0;background:var(--acc);transition:width .2s}
+.va #toc{position:sticky;top:56px;z-index:14;max-width:34em;margin:0 auto;padding:6px 12px 10px;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 12px 24px -16px rgba(20,45,35,.35)}
+.va #toc ol{list-style:none;margin:0;padding:0;counter-reset:tc;font-size:16px}
+.va #toc li{counter-increment:tc}
+.va #toc a{display:grid;grid-template-columns:2em 1fr;padding:11px 8px;border-radius:10px;color:var(--ink);text-decoration:none}
+.va #toc a::before{content:counter(tc);color:var(--acc);font-weight:700;font-variant-numeric:tabular-nums}
+.va #toc a:hover,.va #toc a.cur{background:var(--wash)}
+
+.va .wrap{max-width:31em;margin:0 auto;padding:30px 20px 20px;font-size:var(--fs,18px);line-height:1.5}
+.va .titleblock{margin-left:2em}
+.va h1{font-size:1.72em;line-height:1.14;letter-spacing:-.018em;font-weight:750;margin:0 0 .35em}
+.va .meta{color:var(--muted);font-size:.8em;margin:0 0 1.4em}
+.va .set{margin:0 0 2.2em 2em;padding:.85em 1em;border-left:3px solid var(--acc);background:var(--wash);border-radius:0 12px 12px 0;font-size:.9em;line-height:1.45}
+.va .set b{display:block;color:var(--acc);margin-bottom:.2em}
+
+/* секция: номер в левом поле – номер абзаца, на который ссылается обратная связь */
+.va section.sec{display:grid;grid-template-columns:2em minmax(0,1fr);scroll-margin-top:70px;margin-bottom:1.6em}
+.va section.sec>*{grid-column:2}
+.va section.sec>.snum{grid-column:1;grid-row:1;font-size:1.05em;line-height:1.35;font-weight:750;color:var(--acc);font-variant-numeric:tabular-nums;padding-top:.02em}
+.va h2{grid-row:1;font-size:1.08em;line-height:1.35;font-weight:700;margin:0 0 .45em}
+.va .para p{margin:0;text-align:left}
+.va .term{background:none;border:0;padding:0;font:inherit;line-height:inherit;color:inherit;cursor:pointer;text-decoration:underline dotted var(--acc);text-decoration-thickness:2px;text-underline-offset:4px}
+.va .term:hover,.va .term.open{background:var(--wash);border-radius:3px}
+.va .note-btn{display:inline-flex;align-items:center;min-height:36px;margin:.3em 0 0;padding:0 2px;border:0;background:none;color:var(--muted);font-size:.78em;font-weight:600;cursor:pointer}
+.va .note-btn:hover{color:var(--acc)}
+.va .note[hidden]{display:none}
+.va .note{display:block;width:100%;margin:.2em 0 .4em;font-size:.85em;min-height:64px;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;background:#fcfdfc}
+.va .note:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--wash);outline:none}
+.va mark{background:var(--mark);color:inherit;padding:0 1px;border-radius:2px}
+.va u.ul{text-decoration:underline;text-decoration-color:var(--acc);text-decoration-thickness:2px;text-underline-offset:3px}
+
+/* блок 4: иллюстрация сразу после своего абзаца */
+.va figure{margin:1em 0 .4em;padding:0}
+.va figure svg{width:100%;max-width:420px;height:auto;display:block}
+.va figure .fig-hi{fill:var(--wash);stroke:var(--acc)}
+.va figure .fig-lo{fill:#f5f7f6;stroke:#a3b0aa}
+.va figcaption{font-size:.78em;color:var(--muted);margin-top:.5em}
+
+/* блок 5: «Проверьте себя» с немедленной обратной связью */
+.va .wr-card{margin:1em 0 .2em;padding:.9em 1em 1em;border:1.5px solid var(--line);border-radius:14px;font-size:.9em}
+.va .wr-card .ttl{font-weight:700;color:var(--acc);font-size:.9em;margin-bottom:.25em}
+.va .wr-card .stm{margin-bottom:.7em}
+.va .tf{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.va .tf label{position:relative;display:grid;place-items:center;min-height:44px;border:1.5px solid var(--line);border-radius:10px;font-weight:650;cursor:pointer;background:#fff}
+.va .tf input{position:absolute;opacity:0;pointer-events:none}
+.va .tf label.sel{border-color:var(--acc);background:var(--wash);color:var(--acc)}
+.va .tf input:disabled+span{opacity:.75}
+.va .fb{margin-top:.7em;font-weight:600;line-height:1.4}
+.va .fb:empty{display:none}
+.va .fb.ok{color:var(--acc)}
+.va .fb.no{color:#a3341f}
+.va .hint{margin:2.4em 0 0 2em;padding-top:1.2em;border-top:1px solid var(--line);font-size:.78em;color:var(--muted);line-height:1.5}
+.va .hint p{margin:0 0 .4em}
+.va #b-finish{background:var(--acc);margin-left:2em;width:calc(100% - 2em)}
+.va #b-finish:hover{background:var(--acc-2)}
+
+#pop{position:absolute;z-index:20;display:none;max-width:min(92vw,24em);background:#fff;border:1px solid #dce4e0;box-shadow:0 14px 32px -8px rgba(20,45,35,.28);border-radius:14px;padding:14px 40px 14px 16px;font-size:16px;line-height:1.45;color:#1c2320}
+#pop b{display:block;font-size:1.02em;margin-bottom:2px}
+#pop .tr{color:#1d6a50;margin-top:6px;font-weight:600}
+#pop .x{position:absolute;top:6px;right:6px;width:32px;height:32px;border:0;background:none;font-size:22px;line-height:1;cursor:pointer;color:#56635d;border-radius:8px}
+#hl{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:30;display:none;padding:4px;border-radius:14px;background:#1c2320;box-shadow:0 10px 24px rgba(0,0,0,.25)}
+#hl button{font-weight:650;font-size:15px;min-height:42px;padding:0 16px;border-radius:10px;border:0;background:transparent;color:#fff;cursor:pointer}
+#hl button+button{margin-left:2px}
+#hl button:hover{background:rgba(255,255,255,.12)}
+
+/* =====================================================================
+   Вариант Б – традиционный цифровой формат (текст, перенесённый из Word/PDF)
+   Не «улучшать»: параметры соответствуют правому столбцу табл. 2.
+   ===================================================================== */
+.vb{background:#fdfdfd}
 .vb .banner{background:linear-gradient(120deg,#2b5876,#4e4376);color:#fff;padding:26px 14px 30px;text-align:center}
 .vb .banner .kicker{font-size:12px;letter-spacing:.2em;text-transform:uppercase;opacity:.8}
 .vb .banner h1{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:400;font-size:24px;margin:8px 0 0;line-height:1.2}
@@ -100,100 +214,111 @@ textarea{min-height:76px;resize:vertical}
 .vb aside{flex:0 1 230px;font-size:13px;line-height:1.3}
 .vb aside .ab{border:1px solid #ddd;background:#f3f3f3;padding:10px;margin-bottom:12px}
 .vb aside .ab h3{font-size:13px;margin:0 0 6px;text-transform:uppercase;color:#4e4376}
+.vb figure{max-width:440px;margin:14px 0 18px}
+.vb figure svg{width:100%;height:auto;display:block}
+.vb figcaption{font-size:12px;font-style:italic;margin-top:4px}
 .vb .wr-block{margin-top:16px;font-size:14px}
 .vb .wr-block h3{font-size:14px;margin:0 0 6px}
 .vb .wr-item{margin:8px 0}
-.vb .finish-wrap{padding:0 10px 60px}
+.vb .tf{display:flex;gap:14px;margin-top:4px}
+.vb .tf label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.vb .finish-wrap{padding:0 10px 40px}
+.vb .finish-wrap .btn{display:inline-block;width:auto;min-height:0;margin-top:10px;padding:8px 16px;border-radius:3px;font-size:14px;font-weight:400;background:#e1e1e1;color:#000;border:1px solid #adadad}
 .vb #gloss{display:none;padding:14px 10px 60px;font-family:"Times New Roman",Times,serif;font-size:14px;line-height:1.3;color:#3c3c3c}
 .vb #gloss dt{font-weight:700;margin-top:10px}
 .vb #gloss dt.cur{background:#fff3a6}
-.tf{display:flex;gap:14px;margin-top:4px}
-.tf label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.vb #gloss .btn{display:inline-block;width:auto;min-height:0;padding:6px 14px;border-radius:3px;font-size:14px;font-weight:400;background:#e1e1e1;color:#000;border:1px solid #adadad}
 </style>
 </head>
-<body>
+<body data-screen="s-start">
 
 <!-- 1. Старт -->
-<section class="screen on" id="s-start">
-  <h1>Исследование чтения с экрана</h1>
+<section class="screen on" id="s-start"><div class="sheet">
+  <div class="steps" aria-hidden="true"><i class="done"></i><i></i><i></i><i></i><i></i></div>
+  <p class="stepnum">Шаг 1 из 5</p>
+  <h1>Чтение текста по специальности</h1>
   <div id="cfgwarn"></div>
-  <p>Вы прочитаете текст на английском языке по экономике и менеджменту и выполните задания. Работа займёт около 30-40 минут.</p>
-  <div class="box">
-    <b>Порядок работы</b>
-    <ol style="margin:.4em 0 0;padding-left:1.3em">
-      <li>Три вопроса перед чтением.</li>
-      <li>Чтение текста. Время не ограничено, читайте внимательно.</li>
-      <li>Одна оценка того, насколько трудно было читать.</li>
-      <li>20 вопросов под текстом. К тексту можно возвращаться.</li>
-      <li>Короткая анкета о том, как вам работалось со страницей.</li>
-    </ol>
-  </div>
-  <p class="muted">Пожалуйста, не закрывайте и не обновляйте страницу до конца работы и не пользуйтесь переводчиком.</p>
-  <label class="blk" for="code">Код участника (его выдаст преподаватель)</label>
-  <input type="text" id="code" autocomplete="off" autocapitalize="characters" placeholder="например, S07">
-  <div class="chk"><input type="checkbox" id="consent"><label for="consent">Я согласен(на) участвовать в исследовании. Я понимаю, что участие добровольное, а ответы анализируются под кодом, без имени.</label></div>
-  <button class="btn" id="b-start" disabled>Начать</button>
-</section>
+  <p class="lead">Вы прочитаете английский текст по экономике и менеджменту и выполните задания к нему. Работа займёт 35-45 минут.</p>
+  <ol class="plan">
+    <li>Перед чтением<span>три вопроса о теме текста</span></li>
+    <li>Чтение<span>время не ограничено, читайте внимательно</span></li>
+    <li>Одна оценка<span>насколько трудно было читать</span></li>
+    <li>Задания после чтения<span>пять заданий под текстом, к тексту можно возвращаться</span></li>
+    <li>Анкета<span>как вам работалось со страницей</span></li>
+  </ol>
+  <p class="muted">Не закрывайте и не обновляйте страницу до конца работы и не пользуйтесь переводчиком.</p>
+  <label class="blk" for="code">Код участника</label>
+  <input type="text" id="code" autocomplete="off" autocapitalize="characters" placeholder="Код выдаёт преподаватель, например S07">
+  <label class="chk" for="consent"><input type="checkbox" id="consent"><span>Я согласен(на) участвовать в исследовании. Участие добровольное, ответы анализируются под кодом, без имени.</span></label>
+  <button class="btn" id="b-start" type="button" disabled>Начать</button>
+</div></section>
 
-<!-- 2. Предтекстовый этап (одинаков в обоих вариантах) -->
-<section class="screen" id="s-pre">
+<!-- 2. Перед чтением (одинаково в обоих вариантах) -->
+<section class="screen" id="s-pre"><div class="sheet">
+  <div class="steps" aria-hidden="true"><i class="done"></i><i class="done"></i><i></i><i></i><i></i></div>
+  <p class="stepnum">Шаг 2 из 5</p>
   <h1>Перед чтением</h1>
-  <p>Ответьте коротко на вопросы (по-английски или по-русски).</p>
+  <p class="lead">Коротко ответьте на вопросы – по-английски или по-русски.</p>
   <div id="pre-qs"></div>
-  <button class="btn" id="b-pre">Перейти к тексту</button>
-</section>
+  <button class="btn" id="b-pre" type="button">Перейти к тексту</button>
+</div></section>
 
-<!-- 3. Чтение (различается в вариантах А и Б) -->
+<!-- 3. Чтение (различается в вариантах А и Б) и задания под текстом -->
 <section class="screen va" id="s-read">
-<div class="topbar"><div class="in"><span class="lbl">Text 2 &middot; Economics and Management</span><button class="tb" id="toc-btn" type="button">Содержание</button><button class="tb" id="fs-minus" type="button" aria-label="Уменьшить шрифт">A&minus;</button><button class="tb" id="fs-plus" type="button" aria-label="Увеличить шрифт">A+</button></div><div class="prog"><div id="prog"></div></div></div>
-<nav id="toc" hidden><ol><li><a href="#sec0" data-sec="0">A new way of working</a></li><li><a href="#sec1" data-sec="1">How platforms make money</a></li><li><a href="#sec2" data-sec="2">Freedom and flexibility</a></li><li><a href="#sec3" data-sec="3">The hidden costs</a></li><li><a href="#sec4" data-sec="4">The question of employment status</a></li><li><a href="#sec5" data-sec="5">Looking ahead</a></li></ol></nav>
-<div class="wrap"><h1>The Gig Economy: Flexibility at a Price</h1>
+<div class="topbar"><div class="in"><span class="lbl" id="cur-sec">Text 2</span><button class="tb" id="toc-btn" type="button" aria-expanded="false" aria-controls="toc">Содержание</button><button class="tb" id="fs-minus" type="button" aria-label="Уменьшить шрифт">A&minus;</button><button class="tb" id="fs-plus" type="button" aria-label="Увеличить шрифт">A+</button></div><div class="prog"><div id="prog"></div></div></div>
+<nav id="toc" hidden aria-label="Содержание"><ol><li><a href="#sec0" data-sec="0">A new way of working</a></li><li><a href="#sec1" data-sec="1">How platforms make money</a></li><li><a href="#sec2" data-sec="2">Freedom and flexibility</a></li><li><a href="#sec3" data-sec="3">The hidden costs</a></li><li><a href="#sec4" data-sec="4">The question of employment status</a></li><li><a href="#sec5" data-sec="5">Looking ahead</a></li></ol></nav>
+<div class="wrap"><div class="titleblock"><h1>The Gig Economy: Flexibility at a Price</h1><p class="meta">Text 2. Economics and Management</p></div>
 <div class="set" id="setbox"><b>Задание</b>Прочитайте текст внимательно, чтобы полностью и точно понять его: основную мысль, аргументы автора, примеры и значения выделенных терминов. Возвращайтесь к фрагментам, которые показались трудными.</div>
 <article id="art">
-<section class="sec" id="sec0"><h2>A new way of working</h2><div class="para"><span class="pnum">1</span><p>Not long ago, a typical career meant a permanent contract, a regular salary and one employer for many years. Today a growing number of people earn money through short-term tasks, or “gigs”, which they find through a <button type="button" class="term" data-t="digital platform">digital platform</button>. Taxi drivers who accept rides through an app, couriers who deliver meals and freelance designers who complete projects for clients around the world are all part of what is called the gig economy. For many of them, a smartphone has replaced the traditional office.</p><button class="note-btn" type="button">+ заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
+<section class="sec" id="sec0"><span class="snum" aria-hidden="true">1</span><h2>A new way of working</h2><div class="para"><p>Not long ago, a typical career meant a permanent contract, a regular salary and one employer for many years. Today a growing number of people earn money through short-term tasks, or “gigs”, which they find through a <button type="button" class="term" data-t="digital platform">digital platform</button>. Taxi drivers who accept rides through an app, couriers who deliver meals and freelance designers who complete projects for clients around the world are all part of what is called the gig economy. For many of them, a smartphone has replaced the traditional office.</p><button class="note-btn" type="button">+ Заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
 </section>
-<section class="sec" id="sec1"><h2>How platforms make money</h2><div class="para"><span class="pnum">2</span><p>The business model of a platform is based on matching supply and demand. The company owns neither cars nor restaurants; it owns software that connects customers with workers and takes a <button type="button" class="term" data-t="commission">commission</button> on each transaction (Figure 1). Because the people who do the work are usually treated as <button type="button" class="term" data-t="independent contractors">independent contractors</button> rather than employees, the platform does not pay for their equipment, insurance or holidays. This keeps fixed costs low and gives the business high <button type="button" class="term" data-t="scalability">scalability</button>: it can expand into a new city quickly without building offices or hiring large numbers of staff.</p><button class="note-btn" type="button">+ заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
-<figure><svg viewBox="0 0 360 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How a platform connects customers and workers" font-family="system-ui, Arial, sans-serif"><rect x="10" y="8" width="340" height="64" rx="10" fill="#f4f4f6" stroke="#8a8a93" stroke-width="1.5"/><text x="24" y="32" font-size="15" font-weight="700" fill="#1a1a1a">Customer</text><text x="24" y="54" font-size="14" fill="#1a1a1a">orders a ride, a meal or a project</text><line x1="180" y1="72" x2="180" y2="104" stroke="#555" stroke-width="2"/><polygon points="174,102 186,102 180,112" fill="#555"/><text x="192" y="97" font-size="13" fill="#444" font-style="italic">pays for the service</text><rect x="10" y="112" width="340" height="84" rx="10" fill="#eef3fb" stroke="#1f5fbf" stroke-width="1.5"/><text x="24" y="136" font-size="15" font-weight="700" fill="#1a1a1a">Platform: app and algorithm</text><text x="24" y="158" font-size="14" fill="#1a1a1a">assigns tasks and sets prices,</text><text x="24" y="178" font-size="14" fill="#1a1a1a">keeps a commission</text><line x1="180" y1="196" x2="180" y2="228" stroke="#555" stroke-width="2"/><polygon points="174,226 186,226 180,236" fill="#555"/><text x="192" y="214" font-size="13" fill="#444" font-style="italic">passes on the task</text><text x="192" y="228" font-size="13" fill="#444" font-style="italic">and the payment</text><rect x="10" y="236" width="340" height="84" rx="10" fill="#f4f4f6" stroke="#8a8a93" stroke-width="1.5"/><text x="24" y="260" font-size="15" font-weight="700" fill="#1a1a1a">Worker: independent contractor</text><text x="24" y="282" font-size="14" fill="#1a1a1a">uses their own phone and equipment,</text><text x="24" y="302" font-size="14" fill="#1a1a1a">pays for their own insurance</text></svg><figcaption>Figure 1. How a platform connects customers and workers</figcaption></figure>
-<div class="wr-card"><div class="ttl">Проверьте себя</div><div>Platforms usually own the cars that drivers use.</div><div class="tf"><label><input type="radio" name="wr0" value="T"> True</label><label><input type="radio" name="wr0" value="F"> False</label></div><div class="fb" id="fb0"></div></div>
+<section class="sec" id="sec1"><span class="snum" aria-hidden="true">2</span><h2>How platforms make money</h2><div class="para"><p>The business model of a platform is based on matching supply and demand. The company owns neither cars nor restaurants; it owns software that connects customers with workers and takes a <button type="button" class="term" data-t="commission">commission</button> on each transaction (Figure 1). Because the people who do the work are usually treated as <button type="button" class="term" data-t="independent contractors">independent contractors</button> rather than employees, the platform does not pay for their equipment, insurance or holidays. This keeps fixed costs low and gives the business high <button type="button" class="term" data-t="scalability">scalability</button>: it can expand into a new city quickly without building offices or hiring large numbers of staff.</p><button class="note-btn" type="button">+ Заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
+<figure><svg viewBox="0 0 360 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How a platform connects customers and workers" font-family="system-ui, Arial, sans-serif"><rect class="fig-lo" x="10" y="8" width="340" height="64" rx="10" fill="#f4f4f6" stroke="#8a8a93" stroke-width="1.5"/><text x="24" y="32" font-size="15" font-weight="700" fill="#1a1a1a">Customer</text><text x="24" y="54" font-size="14" fill="#1a1a1a">orders a ride, a meal or a project</text><line x1="180" y1="72" x2="180" y2="104" stroke="#555" stroke-width="2"/><polygon points="174,102 186,102 180,112" fill="#555"/><text x="192" y="97" font-size="13" fill="#444" font-style="italic">pays for the service</text><rect class="fig-hi" x="10" y="112" width="340" height="84" rx="10" fill="#eef3fb" stroke="#1f5fbf" stroke-width="1.5"/><text x="24" y="136" font-size="15" font-weight="700" fill="#1a1a1a">Platform: app and algorithm</text><text x="24" y="158" font-size="14" fill="#1a1a1a">assigns tasks and sets prices,</text><text x="24" y="178" font-size="14" fill="#1a1a1a">keeps a commission</text><line x1="180" y1="196" x2="180" y2="228" stroke="#555" stroke-width="2"/><polygon points="174,226 186,226 180,236" fill="#555"/><text x="192" y="214" font-size="13" fill="#444" font-style="italic">passes on the task</text><text x="192" y="228" font-size="13" fill="#444" font-style="italic">and the payment</text><rect class="fig-lo" x="10" y="236" width="340" height="84" rx="10" fill="#f4f4f6" stroke="#8a8a93" stroke-width="1.5"/><text x="24" y="260" font-size="15" font-weight="700" fill="#1a1a1a">Worker: independent contractor</text><text x="24" y="282" font-size="14" fill="#1a1a1a">uses their own phone and equipment,</text><text x="24" y="302" font-size="14" fill="#1a1a1a">pays for their own insurance</text></svg><figcaption>Figure 1. How a platform connects customers and workers</figcaption></figure>
+<div class="wr-card"><div class="ttl">Проверьте себя</div><div class="stm">Platforms usually own the cars that drivers use.</div><div class="tf"><label><input type="radio" name="wr0" value="T"> <span>True</span></label><label><input type="radio" name="wr0" value="F"> <span>False</span></label></div><div class="fb" id="fb0" aria-live="polite"></div></div>
 </section>
-<section class="sec" id="sec2"><h2>Freedom and flexibility</h2><div class="para"><span class="pnum">3</span><p>Supporters of the gig economy emphasise its advantages for workers. People can choose when and how much they work, which suits students, parents and those who want to combine several jobs. Entry barriers are low, since many platforms require little more than a phone and an identity document. For companies, the model offers the ability to respond to changes in demand almost instantly, for example by attracting more drivers during busy evening hours through higher prices.</p><button class="note-btn" type="button">+ заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
-<div class="wr-card"><div class="ttl">Проверьте себя</div><div>Many platforms require little more than a phone and an identity document.</div><div class="tf"><label><input type="radio" name="wr1" value="T"> True</label><label><input type="radio" name="wr1" value="F"> False</label></div><div class="fb" id="fb1"></div></div>
+<section class="sec" id="sec2"><span class="snum" aria-hidden="true">3</span><h2>Freedom and flexibility</h2><div class="para"><p>Supporters of the gig economy emphasise its advantages for workers. People can choose when and how much they work, which suits students, parents and those who want to combine several jobs. Entry barriers are low, since many platforms require little more than a phone and an identity document. For companies, the model offers the ability to respond to changes in demand almost instantly, for example by attracting more drivers during busy evening hours through higher prices.</p><button class="note-btn" type="button">+ Заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
+<div class="wr-card"><div class="ttl">Проверьте себя</div><div class="stm">Many platforms require little more than a phone and an identity document.</div><div class="tf"><label><input type="radio" name="wr1" value="T"> <span>True</span></label><label><input type="radio" name="wr1" value="F"> <span>False</span></label></div><div class="fb" id="fb1" aria-live="polite"></div></div>
 </section>
-<section class="sec" id="sec3"><h2>The hidden costs</h2><div class="para"><span class="pnum">4</span><p>Critics, on the other hand, argue that this flexibility has a price. Earnings depend on the number of orders, so gig workers often face <button type="button" class="term" data-t="income volatility">income volatility</button> and find it hard to plan their budgets. They usually have no sick pay and no employer contributions to their pensions. In addition, their work is organised by <button type="button" class="term" data-t="algorithmic management">algorithmic management</button>: an app assigns tasks, sets prices and evaluates performance through customer ratings. A worker whose rating falls too low may face <button type="button" class="term" data-t="deactivation">deactivation</button>, which means losing access to the platform, often without a clear explanation.</p><button class="note-btn" type="button">+ заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
+<section class="sec" id="sec3"><span class="snum" aria-hidden="true">4</span><h2>The hidden costs</h2><div class="para"><p>Critics, on the other hand, argue that this flexibility has a price. Earnings depend on the number of orders, so gig workers often face <button type="button" class="term" data-t="income volatility">income volatility</button> and find it hard to plan their budgets. They usually have no sick pay and no employer contributions to their pensions. In addition, their work is organised by <button type="button" class="term" data-t="algorithmic management">algorithmic management</button>: an app assigns tasks, sets prices and evaluates performance through customer ratings. A worker whose rating falls too low may face <button type="button" class="term" data-t="deactivation">deactivation</button>, which means losing access to the platform, often without a clear explanation.</p><button class="note-btn" type="button">+ Заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
 </section>
-<section class="sec" id="sec4"><h2>The question of employment status</h2><div class="para"><span class="pnum">5</span><p>The central legal issue is <button type="button" class="term" data-t="employment status">employment status</button>. If gig workers are independent contractors, they are responsible for their own social protection; if they are employees, the platform must provide it. Courts and governments have reached different conclusions. In 2021 the UK Supreme Court ruled that Uber drivers should be classified as workers entitled to the minimum wage and paid holidays. In 2024 the European Union adopted a directive that introduces a legal presumption of employment when a platform controls how the work is performed.</p><button class="note-btn" type="button">+ заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
-<div class="wr-card"><div class="ttl">Проверьте себя</div><div>All countries have reached the same conclusion about the status of gig workers.</div><div class="tf"><label><input type="radio" name="wr2" value="T"> True</label><label><input type="radio" name="wr2" value="F"> False</label></div><div class="fb" id="fb2"></div></div>
+<section class="sec" id="sec4"><span class="snum" aria-hidden="true">5</span><h2>The question of employment status</h2><div class="para"><p>The central legal issue is <button type="button" class="term" data-t="employment status">employment status</button>. If gig workers are independent contractors, they are responsible for their own social protection; if they are employees, the platform must provide it. Courts and governments have reached different conclusions. In 2021 the UK Supreme Court ruled that Uber drivers should be classified as workers entitled to the minimum wage and paid holidays. In 2024 the European Union adopted a directive that introduces a legal presumption of employment when a platform controls how the work is performed.</p><button class="note-btn" type="button">+ Заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
+<div class="wr-card"><div class="ttl">Проверьте себя</div><div class="stm">All countries have reached the same conclusion about the status of gig workers.</div><div class="tf"><label><input type="radio" name="wr2" value="T"> <span>True</span></label><label><input type="radio" name="wr2" value="F"> <span>False</span></label></div><div class="fb" id="fb2" aria-live="polite"></div></div>
 </section>
-<section class="sec" id="sec5"><h2>Looking ahead</h2><div class="para"><span class="pnum">6</span><p>For managers, the debate is not only legal but also strategic. A business model that depends on low labour costs may become less profitable if regulation changes, and the public increasingly expects companies to treat people fairly. At the same time, many workers value the independence that platforms offer and do not want to lose it. The challenge for the coming years is to find forms of work that combine the flexibility of the gig economy with the security of traditional employment.</p><button class="note-btn" type="button">+ заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
+<section class="sec" id="sec5"><span class="snum" aria-hidden="true">6</span><h2>Looking ahead</h2><div class="para"><p>For managers, the debate is not only legal but also strategic. A business model that depends on low labour costs may become less profitable if regulation changes, and the public increasingly expects companies to treat people fairly. At the same time, many workers value the independence that platforms offer and do not want to lose it. The challenge for the coming years is to find forms of work that combine the flexibility of the gig economy with the security of traditional employment.</p><button class="note-btn" type="button">+ Заметка</button><textarea class="note" hidden placeholder="Ваша заметка к абзацу"></textarea></div>
 </section>
 </article>
-<p class="hint">Термины с пунктирным подчёркиванием можно нажать, чтобы увидеть пояснение. Чтобы выделить или подчеркнуть фрагмент, выделите его пальцем и выберите действие внизу экрана. К каждому абзацу можно добавить заметку. Кнопки A&minus; и A+ меняют размер шрифта.</p>
-<button class="btn" id="b-finish" type="button">Я прочитал(а) текст – перейти к вопросам</button></div>
+<div class="hint"><p>Нажмите на термин с пунктирным подчёркиванием, чтобы увидеть пояснение.</p><p>Чтобы выделить или подчеркнуть фрагмент, выделите его и выберите действие внизу экрана.</p><p>Кнопки A&minus; и A+ вверху меняют размер шрифта, «Содержание» – переход к разделу.</p></div>
+<button class="btn" id="b-finish" type="button">Я прочитал(а) текст</button></div>
 <div class="after" id="after">
-  <div id="paasbox" hidden>
-    <h2>Одна оценка перед вопросами</h2>
-    <div class="q" id="q-paas">
+  <div class="sheet" id="paasbox" hidden>
+    <div class="steps" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i></i><i></i></div>
+    <p class="stepnum">Шаг 3 из 5</p>
+    <h1>Насколько трудно было читать?</h1>
+    <div class="q" id="q-paas" style="border:0;padding-top:4px">
       <div class="qt">Сколько умственных усилий потребовало от вас чтение этого текста?</div>
       <div id="paas-opts"></div>
     </div>
     <p id="paas-err" class="err"></p>
-    <button class="btn" id="b-paas" type="button">Перейти к вопросам</button>
+    <button class="btn" id="b-paas" type="button">Перейти к заданиям</button>
   </div>
-  <div id="testzone" hidden>
-    <h2>Вопросы к тексту</h2>
-    <p class="muted">Выберите один вариант ответа в каждом вопросе. Текст находится выше: можно прокрутить страницу вверх и перечитать нужный фрагмент.</p>
-    <div id="test-qs"></div>
+  <div class="sheet" id="testzone" hidden>
+    <div class="steps" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i></i></div>
+    <p class="stepnum">Шаг 4 из 5</p>
+    <h1>Задания после чтения</h1>
+    <p class="lead">Текст находится выше – прокрутите страницу вверх, если нужно что-то перечитать.</p>
+    <div id="tasks"></div>
     <p id="test-err" class="err"></p>
-    <button class="btn" id="b-test" type="button">Отправить ответы</button>
+    <button class="btn" id="b-test" type="button">Сохранить и перейти к анкете</button>
   </div>
 </div>
 </section>
 
 <!-- 5. Анкета -->
-<section class="screen" id="s-q">
-  <h1>Анкета</h1>
-  <h2>Как вам работалось с текстом</h2>
-  <p class="muted">Отметьте, насколько вы согласны с каждым утверждением о странице, с которой вы только что работали.</p>
+<section class="screen" id="s-q"><div class="sheet">
+  <div class="steps" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i></div>
+  <p class="stepnum">Шаг 5 из 5</p>
+  <h1>Как вам работалось со страницей</h1>
+  <p class="lead">Отметьте, насколько вы согласны с каждым утверждением о странице с текстом, которую вы только что читали.</p>
   <div id="ergo-qs"></div>
   <h2>Внешний вид</h2>
   <div class="q" id="q-attr">
@@ -202,28 +327,28 @@ textarea{min-height:76px;resize:vertical}
     <div class="ends"><span>1 – совсем непривлекательная</span><span>7 – очень привлекательная</span></div>
   </div>
   <h2>Удобство страницы</h2>
-  <p class="muted">Под «системой» здесь понимается страница с текстом, с которой вы работали. Отметьте, насколько вы согласны с каждым утверждением.</p>
+  <p class="muted">Под «системой» здесь понимается страница с текстом.</p>
   <div id="sus-qs"></div>
   <p id="q-err" class="err"></p>
-  <button class="btn" id="b-q">Завершить</button>
-</section>
+  <button class="btn" id="b-q" type="button">Отправить ответы</button>
+</div></section>
 
 <!-- 6. Конец -->
-<section class="screen" id="s-done">
-  <h1>Спасибо!</h1>
-  <p id="done-score"></p>
+<section class="screen" id="s-done"><div class="sheet">
+  <h1>Спасибо, работа завершена</h1>
+  <p id="done-score" class="lead"></p>
   <p id="done-status" class="muted">Отправляем ответы…</p>
-  <button class="btn sec" id="b-dl" style="display:none">Скачать файл с ответами</button>
-</section>
+  <button class="btn sec" id="b-dl" type="button" style="display:none">Скачать файл с ответами</button>
+</div></section>
 
 <div id="pop" role="dialog"></div>
 <div id="hl"><button id="hl-mark" type="button">Выделить</button><button id="hl-under" type="button">Подчеркнуть</button></div>
 
 <script>
-/* ===== НАСТРОЙКА: вставьте сюда адрес веб-приложения Google Apps Script ===== */
+/* ===== НАСТРОЙКА: адрес веб-приложения Google Apps Script ===== */
 const ENDPOINT = "https://script.google.com/macros/s/AKfycbx3JnvjuF7nwaxzsycdjzC_AhsiT_x7pj2DD6XMPhisPc_trqPCYsYluQteuDDQWA8O/exec";
-/* ============================================================================ */
-const CFG = {"page_version": "2026-11-26", "text_id": "text2", "variant": "A", "group": 2, "pre": ["Have you or your friends ever earned money through an app (delivery, taxi, freelance work)?", "What are the advantages of working without a permanent contract?", "What risks can such work involve?"], "wr": [[1, "Platforms usually own the cars that drivers use.", false], [2, "Many platforms require little more than a phone and an identity document.", true], [4, "All countries have reached the same conclusion about the status of gig workers.", false]], "glossary": {"digital platform": ["an online service or app that connects people who offer work with people who need it", "цифровая платформа"], "commission": ["a percentage of the price that a company keeps for arranging a sale or service", "комиссия"], "independent contractors": ["people who work for themselves and are paid for separate tasks, not as employees", "независимые подрядчики"], "scalability": ["the ability of a business to grow quickly without a large increase in costs", "масштабируемость"], "income volatility": ["the situation when the amount of money a person earns changes a lot from week to week", "нестабильность дохода"], "algorithmic management": ["organising and controlling work with the help of computer programs instead of human managers", "алгоритмическое управление"], "deactivation": ["blocking a worker’s account so that they can no longer receive tasks on the platform", "отключение от платформы"], "employment status": ["the legal category of a working person, which decides what rights and protection they have", "трудовой статус"]}, "test": [{"p": "F", "q": "How do gig workers usually find their tasks?", "o": ["through newspaper adverts", "through their trade unions", "through digital platforms", "through employment agencies"], "k": 2}, {"p": "F", "q": "What does a platform company typically own?", "o": ["software that connects customers and workers", "the equipment that couriers need for work", "offices in every city where it operates", "the cars and restaurants that its workers use"], "k": 0}, {"p": "F", "q": "How does a platform earn money?", "o": ["It sells cars and bicycles to its workers.", "It charges workers a monthly membership fee.", "It receives regular grants from the government.", "It keeps a commission on each transaction."], "k": 3}, {"p": "F", "q": "According to supporters, who benefits from choosing working hours freely?", "o": ["students, parents and people with several jobs", "customers who often order meals late in the evening", "managers and owners of large digital platforms", "retired people who want to stay active"], "k": 0}, {"p": "F", "q": "How can platforms attract more drivers during busy hours?", "o": ["by hiring additional office staff", "by offering drivers permanent contracts", "by raising prices at those times", "by lowering customers’ ratings"], "k": 2}, {"p": "F", "q": "What may happen to a worker whose rating falls too low?", "o": ["They may become employees automatically.", "They may lose access to the platform.", "They may receive a higher commission.", "They may be sent on a training course."], "k": 1}, {"p": "F", "q": "What did the UK Supreme Court decide in 2021?", "o": ["Uber drivers are workers with minimum wage rights.", "Uber drivers are independent contractors, not workers.", "Platforms must pay pensions to their customers.", "Uber must stop operating in the United Kingdom."], "k": 0}, {"p": "F", "q": "What does the 2024 EU directive introduce?", "o": ["free accident insurance for every customer of a platform", "a presumption of employment when platforms control work", "a single minimum price for taxi rides in every EU country", "a complete ban on platforms that manage work by algorithm"], "k": 1}, {"p": "C", "q": "What is the main idea of the text?", "o": ["Gig work should be banned because it harms both workers and customers.", "Digital platforms cannot make a profit without public financial support.", "Gig work is flexible but risky, and its regulation is still developing.", "Traditional jobs with permanent contracts no longer exist in most countries."], "k": 2}, {"p": "C", "q": "Why does the author mention a permanent contract and one employer at the beginning?", "o": ["to contrast traditional careers with gig work", "to criticise employers who offer contracts", "to describe what an ideal job for students looks like", "to explain how platform algorithms work"], "k": 0}, {"p": "C", "q": "Why do platforms have low fixed costs?", "o": ["They pay much lower taxes than other companies.", "Their customers pay almost all the costs of the business.", "They do not pay for workers’ equipment or holidays.", "They use cheap software that is easy to copy."], "k": 2}, {"p": "C", "q": "What is the main purpose of the part about hidden costs?", "o": ["to describe the advantages for workers", "to report recent decisions of the courts", "to explain the disadvantages for workers", "to give practical advice to managers"], "k": 2}, {"p": "C", "q": "Why is income volatility a problem for gig workers?", "o": ["Gig workers have to pay unusually high income taxes.", "Earnings change with orders, so budgets are hard to plan.", "Prices for services stay the same for many years.", "Platforms usually pay their workers several months too late."], "k": 1}, {"p": "C", "q": "How is employment status connected with social protection?", "o": ["Employment status has no influence on the protection a worker gets.", "Employers protect employees; contractors protect themselves.", "Contractors receive more protection than employees do.", "The state provides the same protection to every worker."], "k": 1}, {"p": "C", "q": "Why does the author call the debate strategic for managers?", "o": ["New rules and public expectations may reduce profits.", "Most workers would prefer to work in an office.", "Algorithms are becoming too expensive to develop.", "Managers may have to start working as drivers themselves."], "k": 0}, {"p": "C", "q": "What does the author conclude?", "o": ["Platforms do not need any regulation at all.", "Work should combine flexibility with security.", "Platforms should fully replace traditional jobs.", "All gig workers must become full-time employees."], "k": 1}, {"p": "T", "q": "In the text, “scalability” means…", "o": ["the legal category that a gig worker belongs to", "a system that rates the quality of workers", "the ability to grow quickly at low extra cost", "a method for measuring the weight of goods"], "k": 2}, {"p": "T", "q": "In the text, “algorithmic management” means…", "o": ["management by people who studied mathematics", "control of work by an app instead of a manager", "a special type of accounting for small firms", "a training programme for new delivery drivers and couriers"], "k": 1}, {"p": "T", "q": "In the text, “deactivation” means…", "o": ["losing access to the platform", "switching off a smartphone", "a sudden reduction in pay", "the end of a working shift"], "k": 0}, {"p": "T", "q": "In the text, “independent contractor” means…", "o": ["a person who works for themselves", "a manager employed by a platform", "a member of a workers’ trade union", "an inspector working for the state"], "k": 0}]};
+/* =============================================================== */
+const CFG = {"page_version": "2026-11-27", "text_id": "text2", "variant": "A", "group": 2, "pre": ["Have you or your friends ever earned money through an app (delivery, taxi, freelance work)?", "What are the advantages of working without a permanent contract?", "What risks can such work involve?"], "wr": [[1, "Platforms usually own the cars that drivers use.", false], [2, "Many platforms require little more than a phone and an identity document.", true], [4, "All countries have reached the same conclusion about the status of gig workers.", false]], "glossary": {"digital platform": ["an online service or app that connects people who offer work with people who need it", "цифровая платформа"], "commission": ["a percentage of the price that a company keeps for arranging a sale or service", "комиссия"], "independent contractors": ["people who work for themselves and are paid for separate tasks, not as employees", "независимые подрядчики"], "scalability": ["the ability of a business to grow quickly without a large increase in costs", "масштабируемость"], "income volatility": ["the situation when the amount of money a person earns changes a lot from week to week", "нестабильность дохода"], "algorithmic management": ["organising and controlling work with the help of computer programs instead of human managers", "алгоритмическое управление"], "deactivation": ["blocking a worker’s account so that they can no longer receive tasks on the platform", "отключение от платформы"], "employment status": ["the legal category of a working person, which decides what rights and protection they have", "трудовой статус"]}, "post": {"plan": [{"i": 3, "s": "Unstable pay and control by apps create risks for workers."}, {"i": 0, "s": "More and more people earn money through short tasks they find online."}, {"i": 5, "s": "Firms will have to balance independence with protection for workers."}, {"i": 4, "s": "Courts and lawmakers disagree about how gig workers should be classified."}, {"i": 2, "s": "Workers and firms value the chance to decide when the work is done."}, {"i": 1, "s": "Companies earn a fee by connecting customers with the people who do the work."}], "tfns": [["Platforms take a commission on each transaction.", "T"], ["Platforms usually pay for their workers' insurance.", "F"], ["Most people who work through platforms are students.", "NS"], ["Customer ratings do not affect a worker's access to the platform.", "F"], ["The UK Supreme Court decided that Uber drivers are entitled to paid holidays.", "T"], ["The EU directive came into force in all member states in 2024.", "NS"]], "cause": {"causes": ["Workers are treated as independent contractors.", "A platform has low fixed costs.", "Earnings depend on the number of orders.", "A worker's rating falls too low."], "effects": ["The worker may lose access to the platform.", "Customers pay less during busy evening hours.", "It can quickly expand into a new city.", "The platform does not pay for their equipment or holidays.", "Workers find it hard to plan their budgets."], "key": [3, 2, 4, 0]}, "summary": {"text": "In the gig economy, people find short tasks through a {1}. The company receives a {2} on every transaction and treats the people who do the work as {3}, so its fixed costs stay low. Workers, however, face {4}, because their earnings change from week to week. Their tasks, prices and ratings are controlled by {5}, and a low rating can lead to {6}.", "answers": ["digital platform", "commission", "independent contractors", "income volatility", "algorithmic management", "deactivation"], "bank": ["algorithmic management", "commission", "deactivation", "digital platform", "employment status", "income volatility", "independent contractors", "scalability"]}, "opinion": "Would you like to work through a digital platform while you are a student? Write 2-4 sentences and give one reason."}};
 </script>
 <script>
 (function(){
@@ -250,12 +375,11 @@ const D = {
 const sm = Math.min(screen.width, screen.height);
 D.device = sm < 600 ? "phone" : (sm < 1100 && D.touch ? "tablet" : "desktop");
 
-// ---------- предупреждение для преподавателя ----------
 if (!/^https:\/\/script\.google\.com\//.test(ENDPOINT)) {
-  $("#cfgwarn").innerHTML = '<div class="warn">Адрес Google-таблицы не настроен. Ответы будут сохранены только в файл. Для преподавателя: впишите адрес веб-приложения Apps Script в переменную ENDPOINT.</div>';
+  $("#cfgwarn").innerHTML = '<div class="warn">Адрес Google-таблицы не настроен. Ответы будут сохранены только в файл. Для преподавателя: укажите адрес веб-приложения Apps Script в build.py и пересоберите страницы.</div>';
 }
 
-// ---------- учёт ухода со страницы ----------
+// ---------- уходы со страницы ----------
 let hiddenAt = null; D.tab_hidden_count = 0; D.tab_hidden_ms = 0;
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) { hiddenAt = now(); D.tab_hidden_count++; }
@@ -264,8 +388,20 @@ document.addEventListener("visibilitychange", () => {
 let guard = false;
 window.addEventListener("beforeunload", e => { if (guard) { e.preventDefault(); e.returnValue = ""; } });
 
-function show(id){ $$(".screen").forEach(s => s.classList.remove("on")); $(id).classList.add("on"); window.scrollTo(0,0); }
+function show(id){
+  $$(".screen").forEach(s => s.classList.remove("on")); $(id).classList.add("on");
+  document.body.dataset.screen = id.slice(1); window.scrollTo(0,0);
+}
 function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+const smooth = matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+
+// выбранный вариант подсвечивается (класс sel у подписи)
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t.type === "radio") $$(`input[name="${CSS.escape(t.name)}"]`).forEach(i => { const l = i.closest("label"); if (l) l.classList.toggle("sel", i.checked); });
+  if (t.type === "checkbox") { const l = t.closest("label"); if (l) l.classList.toggle("sel", t.checked); }
+  if (t.tagName === "SELECT") t.classList.toggle("empty", !t.value);
+});
 
 // ---------- 1. старт ----------
 const code = $("#code"), consent = $("#consent"), bStart = $("#b-start");
@@ -279,7 +415,7 @@ bStart.addEventListener("click", () => {
   show("#s-pre");
 });
 
-// ---------- 2. предтекстовый этап ----------
+// ---------- 2. перед чтением ----------
 $("#pre-qs").innerHTML = CFG.pre.map((q,i) =>
   `<label class="blk" for="pre${i}">${i+1}. ${esc(q)}</label><textarea id="pre${i}"></textarea>`).join("");
 $("#b-pre").addEventListener("click", () => {
@@ -337,7 +473,7 @@ function trackParagraphs(){
   paras.forEach(p => io.observe(p));
 }
 
-// Фазы: "read" – чтение до кнопки «Я прочитал(а) текст», "test" – оценка Paas и ответы на вопросы.
+// Фазы: "read" – чтение до кнопки «Я прочитал(а) текст», "test" – оценка усилий и задания после чтения.
 let bucket = "read";
 let paras = [];
 const dwell = {read: [], test: []}, retByPara = {read: [], test: []};
@@ -372,32 +508,35 @@ paras.forEach(() => { dwell.read.push(0); dwell.test.push(0); retByPara.read.pus
 D.gloss_ms = 0; let glossT = null;
 function glossStart(){ if (glossT !== null) D.gloss_ms += now() - glossT; glossT = now(); }
 function glossStop(){ if (glossT !== null) { D.gloss_ms += now() - glossT; glossT = null; } }
-
-// глоссарий
 function glossEntry(t){ const g = CFG.glossary[t]; return {en: g[0], ru: g[1]}; }
 function logGloss(t){ D.glossary_opens++; D.glossary_terms.push(t); }
 
 if (CFG.variant === "A") {
   const pop = $("#pop");
+  function closePop(){ if (pop.style.display === "block") { pop.style.display = "none"; $$(".term.open").forEach(x => x.classList.remove("open")); glossStop(); } }
   $$(".term").forEach(b => b.addEventListener("click", ev => {
     ev.stopPropagation();
+    closePop();
     const t = b.dataset.t, g = glossEntry(t);
-    pop.innerHTML = `<button class="x" aria-label="Закрыть">×</button><b>${esc(t)}</b> – ${esc(g.en)}<div class="tr">${esc(g.ru)}</div>`;
-    pop.style.display = "block";
+    pop.innerHTML = `<button class="x" type="button" aria-label="Закрыть">×</button><b>${esc(t)}</b>${esc(g.en)}<div class="tr">${esc(g.ru)}</div>`;
+    pop.style.display = "block"; b.classList.add("open");
     const r = b.getBoundingClientRect();
     const w = pop.offsetWidth;
     let left = r.left + window.scrollX;
     left = Math.max(8, Math.min(left, window.scrollX + document.documentElement.clientWidth - w - 8));
     pop.style.left = left + "px";
-    pop.style.top = (r.bottom + window.scrollY + 6) + "px";
-    pop.querySelector(".x").onclick = () => { pop.style.display = "none"; glossStop(); };
+    pop.style.top = (r.bottom + window.scrollY + 8) + "px";
+    pop.querySelector(".x").onclick = closePop;
     logGloss(t); glossStart();
   }));
-  document.addEventListener("click", e => { if (!pop.contains(e.target) && pop.style.display === "block") { pop.style.display = "none"; glossStop(); } });
+  document.addEventListener("click", e => { if (!pop.contains(e.target)) closePop(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closePop(); });
 
   // заметки
   $$(".note-btn").forEach(b => b.addEventListener("click", () => {
-    const ta = b.nextElementSibling; ta.hidden = !ta.hidden; if (!ta.hidden) ta.focus();
+    const ta = b.nextElementSibling; ta.hidden = !ta.hidden;
+    b.textContent = ta.hidden ? (ta.value.trim() ? "Заметка сохранена – открыть" : "+ Заметка") : "Скрыть заметку";
+    if (!ta.hidden) ta.focus();
   }));
 
   // блок 5: выделение и подчёркивание
@@ -423,7 +562,7 @@ if (CFG.variant === "A") {
   $("#hl-mark").addEventListener("click", () => { const t = wrapSel("mark"); if (t) { D.highlights++; D.highlight_texts.push(t); } });
   $("#hl-under").addEventListener("click", () => { const t = wrapSel("u", "ul"); if (t) { D.underlines++; D.underline_texts.push(t); } });
 
-  // блок 5: задания к фрагментам с обратной связью (фиксируется первый ответ)
+  // блок 5: «Проверьте себя» с обратной связью (фиксируется первый ответ)
   CFG.wr.forEach((w,i) => {
     $$(`input[name="wr${i}"]`).forEach(inp => inp.addEventListener("change", () => {
       const right = String(inp.value === "T") === String(w[2]);
@@ -434,21 +573,31 @@ if (CFG.variant === "A") {
     }));
   });
 
-  // блок 2: содержание и индикатор прогресса
+  // блок 2: содержание, текущий раздел в верхней панели, индикатор прогресса
   D.toc_opens = 0; D.toc_jumps = 0;
-  const toc = $("#toc");
-  $("#toc-btn").addEventListener("click", () => { toc.hidden = !toc.hidden; if (!toc.hidden) D.toc_opens++; });
-  $$("#toc a").forEach(a => a.addEventListener("click", ev => {
-    ev.preventDefault(); toc.hidden = true; D.toc_jumps++;
-    $("#sec" + a.dataset.sec).scrollIntoView({behavior: "smooth", block: "start"});
+  const toc = $("#toc"), tocBtn = $("#toc-btn"), lbl = $("#cur-sec"), lbl0 = lbl.textContent;
+  const secs = $$(".va section.sec"), tocLinks = $$("#toc a");
+  tocBtn.addEventListener("click", ev => {
+    ev.stopPropagation();
+    toc.hidden = !toc.hidden; tocBtn.setAttribute("aria-expanded", String(!toc.hidden));
+    if (!toc.hidden) D.toc_opens++;
+  });
+  tocLinks.forEach(a => a.addEventListener("click", ev => {
+    ev.preventDefault(); toc.hidden = true; tocBtn.setAttribute("aria-expanded", "false"); D.toc_jumps++;
+    $("#sec" + a.dataset.sec).scrollIntoView({behavior: smooth, block: "start"});
   }));
   const prog = $("#prog");
-  window.addEventListener("scroll", () => {
+  function onReadScroll(){
     const art = $("#art"); if (!art || !$("#s-read").classList.contains("on")) return;
     const r = art.getBoundingClientRect();
     const done = Math.min(1, Math.max(0, (window.innerHeight - r.top) / r.height));
     prog.style.width = Math.round(done * 100) + "%";
-  }, {passive: true});
+    let cur = -1;
+    secs.forEach((s,i) => { if (s.getBoundingClientRect().top < 90) cur = i; });
+    lbl.textContent = cur >= 0 ? (cur + 1) + ". " + secs[cur].querySelector("h2").textContent : lbl0;
+    tocLinks.forEach((a,i) => a.classList.toggle("cur", i === cur));
+  }
+  window.addEventListener("scroll", onReadScroll, {passive: true});
 
   // блок 3: изменение кегля
   const SIZES = [16, 18, 20, 22]; let fsi = 1;
@@ -457,6 +606,7 @@ if (CFG.variant === "A") {
   function setFs(d){
     const n = Math.max(0, Math.min(SIZES.length - 1, fsi + d)); if (n === fsi) return;
     fsi = n; wrap.style.setProperty("--fs", SIZES[fsi] + "px"); D.font_changes++; D.font_px_final = SIZES[fsi];
+    $("#fs-minus").disabled = fsi === 0; $("#fs-plus").disabled = fsi === SIZES.length - 1;
   }
   $("#fs-minus").addEventListener("click", () => setFs(-1));
   $("#fs-plus").addEventListener("click", () => setFs(1));
@@ -479,7 +629,7 @@ if (CFG.variant === "A") {
   });
 }
 
-// завершение чтения: текст остаётся на странице, ниже появляются оценка Paas и вопросы
+// завершение чтения: текст остаётся на странице, ниже появляются оценка усилий и задания
 $("#b-finish").addEventListener("click", () => {
   D.reading_ms = now() - tRead;
   if (setT !== null) { D.set_visible_ms += now() - setT; setT = null; }
@@ -497,7 +647,7 @@ $("#b-finish").addEventListener("click", () => {
   setBucket("test");
   $("#b-finish").style.display = "none";
   $("#paasbox").hidden = false;
-  $("#paasbox").scrollIntoView({behavior: "smooth", block: "start"});
+  $("#paasbox").scrollIntoView({behavior: smooth, block: "start"});
 });
 $("#b-paas").addEventListener("click", () => {
   const c = document.querySelector('input[name="paas"]:checked');
@@ -505,37 +655,86 @@ $("#b-paas").addEventListener("click", () => {
   if (!c) { $("#paas-err").textContent = "Выберите один вариант."; return; }
   D.paas = +c.value;
   $("#paasbox").hidden = true;
-  startTest();
+  startTasks();
 });
 
-// ---------- 4. тест ----------
-let tTest = 0;
-function startTest(){
-  $("#test-qs").innerHTML = CFG.test.map((q,i) => `
-    <div class="q" id="tq${i}"><div class="qt">${i+1}. ${esc(q.q)}</div>
-    ${q.o.map((o,j) => `<label class="opt"><input type="radio" name="t${i}" value="${j}"><span>${String.fromCharCode(97+j)}) ${esc(o)}</span></label>`).join("")}
-    </div>`).join("");
+// ---------- 4. задания после чтения ----------
+const P = CFG.post;
+let tTest = 0, planOrder = [];
+function startTasks(){
+  const h = [];
+  h.push(`<div class="task" id="t-plan"><div class="task-h"><small>Задание 1 из 5</small>Восстановите план текста</div>
+    <p class="how">Нажимайте на пункты в том порядке, в каком эти мысли идут в тексте. Повторное нажатие снимает номер.</p>
+    ${P.plan.map((it,j) => `<button type="button" class="ord" data-i="${it.i}"><span class="nb"></span><span>${esc(it.s)}</span></button>`).join("")}
+    <button type="button" class="linkbtn" id="plan-reset">Начать заново</button></div>`);
+  h.push(`<div class="task" id="t-tfns"><div class="task-h"><small>Задание 2 из 5</small>Верно, неверно или в тексте не сказано?</div>
+    <p class="how">True – утверждение соответствует тексту, False – противоречит ему, Not stated – в тексте об этом ничего не сказано.</p>
+    ${P.tfns.map((s,j) => `<div class="st"><p>${j+1}. ${esc(s[0])}</p><div class="seg">
+      ${["T","F","NS"].map(v => `<label><input type="radio" name="tf${j}" value="${v}">${v === "T" ? "True" : v === "F" ? "False" : "Not stated"}</label>`).join("")}</div></div>`).join("")}</div>`);
+  h.push(`<div class="task" id="t-cause"><div class="task-h"><small>Задание 3 из 5</small>Причины и следствия</div>
+    <p class="how">Подберите к каждой причине следствие, о котором говорится в тексте. Одно следствие лишнее.</p>
+    ${P.cause.causes.map((c,j) => `<div class="ce"><p>${j+1}. ${esc(c)}</p><select id="ce${j}" class="empty" aria-label="Следствие для причины ${j+1}">
+      <option value="">Выберите следствие</option>${P.cause.effects.map((e,k) => `<option value="${k}">${esc(e)}</option>`).join("")}</select></div>`).join("")}</div>`);
+  let n = 0;
+  const sumHtml = esc(P.summary.text).replace(/\{(\d)\}/g, (m,d) => {
+    const j = +d - 1;
+    return `<select id="gap${j}" class="empty" aria-label="Пропуск ${d}"><option value="">(${d})</option>${P.summary.bank.map(w => `<option value="${esc(w)}">${esc(w)}</option>`).join("")}</select>`;
+  });
+  h.push(`<div class="task" id="t-sum"><div class="task-h"><small>Задание 4 из 5</small>Дополните краткое изложение текста</div>
+    <p class="how">Выберите термин для каждого пропуска. Два термина лишние.</p>
+    <ul class="bank">${P.summary.bank.map(w => `<li>${esc(w)}</li>`).join("")}</ul>
+    <p class="sum">${sumHtml}</p></div>`);
+  h.push(`<div class="task" id="t-op"><div class="task-h"><small>Задание 5 из 5</small>Ваше мнение</div>
+    <p class="how">${esc(P.opinion)} Пишите по-английски.</p>
+    <textarea id="opinion" rows="5" placeholder="In my opinion…"></textarea><div class="wc" id="wc">Слов: 0 (нужно не меньше 10)</div></div>`);
+  $("#tasks").innerHTML = h.join("");
+  // план: нажатие присваивает следующий номер
+  const ords = $$(".ord");
+  function drawPlan(){ ords.forEach(b => { const k = planOrder.indexOf(+b.dataset.i); b.classList.toggle("on", k >= 0); b.querySelector(".nb").textContent = k >= 0 ? k + 1 : ""; }); }
+  ords.forEach(b => b.addEventListener("click", () => {
+    const i = +b.dataset.i, k = planOrder.indexOf(i);
+    if (k >= 0) planOrder.splice(k, 1); else planOrder.push(i);
+    D.plan_clicks = (D.plan_clicks || 0) + 1; drawPlan();
+  }));
+  $("#plan-reset").addEventListener("click", () => { planOrder = []; drawPlan(); });
+  const op = $("#opinion");
+  op.addEventListener("input", () => { const w = words(op.value); $("#wc").textContent = "Слов: " + w + (w < 10 ? " (нужно не меньше 10)" : ""); });
+  $("#paasbox").hidden = true;
   $("#testzone").hidden = false;
-  $("#testzone").scrollIntoView({behavior: "smooth", block: "start"});
+  $("#testzone").scrollIntoView({behavior: smooth, block: "start"});
   tTest = now();
 }
+function words(s){ return (s.trim().match(/\S+/g) || []).length; }
+
 $("#b-test").addEventListener("click", () => {
-  let miss = 0, first = null;
-  CFG.test.forEach((q,i) => {
-    const c = document.querySelector(`input[name="t${i}"]:checked`);
-    $("#tq"+i).classList.toggle("miss", !c);
-    if (!c) { miss++; if (first === null) first = i; }
-  });
-  if (miss) { $("#test-err").textContent = "Ответьте на все вопросы (без ответа: " + miss + ")."; $("#tq"+first).scrollIntoView({behavior:"smooth"}); return; }
+  const miss = [];
+  const planOk = planOrder.length === P.plan.length;
+  const tfOk = P.tfns.every((s,j) => document.querySelector(`input[name="tf${j}"]:checked`));
+  const ceOk = P.cause.causes.every((c,j) => $("#ce"+j).value !== "");
+  const gOk = P.summary.answers.every((a,j) => $("#gap"+j).value !== "");
+  const opOk = words($("#opinion").value) >= 10;
+  [["#t-plan",planOk],["#t-tfns",tfOk],["#t-cause",ceOk],["#t-sum",gOk],["#t-op",opOk]].forEach(([id,ok]) => { $(id).classList.toggle("miss", !ok); if (!ok) miss.push(id); });
+  if (miss.length) {
+    $("#test-err").textContent = "Выполните все задания (не выполнено: " + miss.length + ").";
+    $(miss[0]).scrollIntoView({behavior: smooth, block: "start"}); return;
+  }
   D.test_ms = now() - tTest;
-  const sc = {F:0, C:0, T:0}; let total = 0;
-  CFG.test.forEach((q,i) => {
-    const v = +document.querySelector(`input[name="t${i}"]:checked`).value;
-    const ok = v === q.k ? 1 : 0;
-    D["q" + (i+1)] = String.fromCharCode(97+v); D["q" + (i+1) + "_ok"] = ok;
-    sc[q.p] += ok; total += ok;
-  });
-  D.score_total = total; D.score_factual = sc.F; D.score_completeness = sc.C; D.score_terms = sc.T;
+  // 1. план: балл за каждый пункт на своём месте
+  let sPlan = 0; planOrder.forEach((i,k) => { if (i === k) sPlan++; });
+  D.plan_order = planOrder.map(i => i + 1).join("-");
+  // 2. True / False / Not stated
+  let sTf = 0;
+  P.tfns.forEach((s,j) => { const v = document.querySelector(`input[name="tf${j}"]:checked`).value; const ok = v === s[1] ? 1 : 0; D["tf" + (j+1)] = v; D["tf" + (j+1) + "_ok"] = ok; sTf += ok; });
+  // 3. причины и следствия
+  let sCe = 0;
+  P.cause.causes.forEach((c,j) => { const v = +$("#ce"+j).value; const ok = v === P.cause.key[j] ? 1 : 0; D["ce" + (j+1)] = v + 1; D["ce" + (j+1) + "_ok"] = ok; sCe += ok; });
+  // 4. краткое изложение
+  let sG = 0;
+  P.summary.answers.forEach((a,j) => { const v = $("#gap"+j).value; const ok = v === a ? 1 : 0; D["gap" + (j+1)] = v; D["gap" + (j+1) + "_ok"] = ok; sG += ok; });
+  // 5. мнение
+  D.opinion_text = $("#opinion").value.trim(); D.opinion_words = words(D.opinion_text);
+  D.score_plan = sPlan; D.score_factual = sTf; D.score_logic = sCe; D.score_terms = sG;
+  D.score_completeness = sPlan + sCe; D.score_total = sPlan + sTf + sCe + sG;
   // итоги замеров по абзацам, иллюстрации и глоссарию
   flushDwell(); glossStop(); paused = true;
   let rd = 0, ts = 0;
@@ -553,9 +752,9 @@ $("#b-test").addEventListener("click", () => {
 
 // ---------- 5. анкета ----------
 const PAAS = ["очень-очень мало","очень мало","мало","скорее мало","ни мало, ни много","скорее много","много","очень много","очень-очень много"];
-$("#paas-opts").innerHTML = PAAS.map((l,i) => `<label class="opt"><input type="radio" name="paas" value="${i+1}"><span>${i+1} – ${l}</span></label>`).join("");
+$("#paas-opts").innerHTML = PAAS.map((l,i) => `<label class="choice"><input type="radio" name="paas" value="${i+1}"><span class="nb">${i+1}</span><span>${l}</span></label>`).join("");
 // Авторская анкета эргономичности страницы: по 2-4 утверждения на каждый блок характеристик 1-5.
-// r: 1 – обратный пункт (балл пересчитывается как 6 - ответ).
+// r: 1 – обратный пункт (балл пересчитывается как 6 - ответ). Названия блоков студентам не показываются.
 const ERGO = [
   {b:1, r:0, s:"Страница выглядела аккуратно и приятно."},
   {b:1, r:1, s:"Оформление страницы отвлекало меня от текста."},
@@ -573,15 +772,10 @@ const ERGO = [
   {b:5, r:0, s:"Задания по ходу чтения помогли мне понять текст."},
   {b:0, r:0, s:"Я хотел(а) бы читать учебные тексты в таком оформлении."}
 ];
-const BLK = {1:"Внешний вид", 2:"Навигация", 3:"Шрифт и читаемость", 4:"Расположение элементов", 5:"Инструменты", 0:"В целом"};
-let lastB = null;
-$("#ergo-qs").innerHTML = ERGO.map((q,i) => {
-  const head = ""; // подписи блоков студентам не показываем, чтобы не подсказывать, что оценивается
-  return `${head}<div class="q" id="eq${i}"><div class="qt">${i+1}. ${esc(q.s)}</div>
-  <div class="scale">${[1,2,3,4,5].map(n => `<label><input type="radio" name="ergo${i}" value="${n}">${n}</label>`).join("")}</div>
-  <div class="ends"><span>1 – совсем не согласен</span><span>5 – полностью согласен</span></div></div>`;
-}).join("");
-$("#attr-scale").innerHTML = [1,2,3,4,5,6,7].map(n => `<label><input type="radio" name="attr" value="${n}">${n}</label>`).join("");
+function scale(name, n){ return `<div class="scale">${Array.from({length:n}, (x,k) => `<label><input type="radio" name="${name}" value="${k+1}">${k+1}</label>`).join("")}</div>`; }
+$("#ergo-qs").innerHTML = ERGO.map((q,i) => `<div class="q" id="eq${i}"><div class="qt">${i+1}. ${esc(q.s)}</div>
+  ${scale("ergo"+i, 5)}<div class="ends"><span>1 – совсем не согласен</span><span>5 – полностью согласен</span></div></div>`).join("");
+$("#attr-scale").outerHTML = scale("attr", 7);
 // SUS. ВНИМАНИЕ: пункты 1-2 – формулировки из статьи Косовой Е.М., Глебко Н.Р., Горбуновой Е.С. (2024);
 // пункты 3-10 – ВРЕМЕННЫЙ перевод. Замените их официальной русской версией, которую авторы высылают по запросу.
 const SUS = [
@@ -596,20 +790,18 @@ const SUS = [
   "Я чувствовал(а) себя уверенно, пользуясь системой.",
   "Мне пришлось многое узнать, прежде чем я смог(ла) работать с этой системой."
 ];
-$("#sus-qs").innerHTML = SUS.map((s,i) => `
-  <div class="q" id="sq${i}"><div class="qt">${i+1}. ${esc(s)}</div>
-  <div class="scale">${[1,2,3,4,5].map(n => `<label><input type="radio" name="sus${i}" value="${n}">${n}</label>`).join("")}</div>
-  <div class="ends"><span>1 – категорически не согласен</span><span>5 – категорически согласен</span></div></div>`).join("");
+$("#sus-qs").innerHTML = SUS.map((s,i) => `<div class="q" id="sq${i}"><div class="qt">${i+1}. ${esc(s)}</div>
+  ${scale("sus"+i, 5)}<div class="ends"><span>1 – категорически не согласен</span><span>5 – категорически согласен</span></div></div>`).join("");
 
 $("#b-q").addEventListener("click", () => {
   const need = ERGO.map((q,i) => "ergo"+i).concat(["attr"]).concat(SUS.map((s,i) => "sus"+i));
-  let miss = 0;
+  let miss = 0, first = null;
   need.forEach(n => {
     const c = document.querySelector(`input[name="${n}"]:checked`);
     const box = n === "attr" ? $("#q-attr") : n.startsWith("ergo") ? $("#eq" + n.slice(4)) : $("#sq" + n.slice(3));
-    box.classList.toggle("miss", !c); if (!c) miss++;
+    box.classList.toggle("miss", !c); if (!c) { miss++; if (!first) first = box; }
   });
-  if (miss) { $("#q-err").textContent = "Ответьте на все вопросы анкеты (без ответа: " + miss + ")."; return; }
+  if (miss) { $("#q-err").textContent = "Ответьте на все вопросы анкеты (без ответа: " + miss + ")."; first.scrollIntoView({behavior: smooth, block: "center"}); return; }
   D.attractiveness = +document.querySelector('input[name="attr"]:checked').value;
   const sums = {}, cnt = {}; let all = 0, n = 0;
   ERGO.forEach((q,i) => {
@@ -652,7 +844,7 @@ async function flush(){
 }
 async function finish(){
   show("#s-done");
-  $("#done-score").textContent = "Ваш результат в тесте: " + D.score_total + " из 20.";
+  $("#done-score").textContent = "Ваш результат в заданиях после чтения: " + D.score_total + " из 22.";
   const rec = flatten(D);
   const q = queue(); q.push(rec); saveQueue(q);
   try { localStorage.setItem("rx_done_" + CFG.text_id + "_" + D.participant, "1"); } catch(e) {}
