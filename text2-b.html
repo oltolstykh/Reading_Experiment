@@ -65,7 +65,8 @@ textarea{min-height:84px;resize:vertical;line-height:1.45}
 .q{padding:18px 0;border-top:1px solid var(--n-line)}
 .q .qt{font-weight:600;margin-bottom:12px}
 .q.miss .qt,.task.miss .task-h{color:var(--n-err)}
-.q.miss .qt::after,.task.miss .task-h::after{content:" – нужен ответ";font-weight:500;font-size:.85em}
+.q.miss .qt::after{content:" – нужен ответ";font-weight:500;font-size:.85em}
+.task.miss .task-h::after{content:" – not completed";font-weight:500;font-size:.85em}
 
 /* варианты ответа: строка-выбор */
 .choice{display:flex;gap:12px;align-items:center;padding:11px 14px;margin:6px 0;border:1.5px solid var(--n-line);border-radius:12px;cursor:pointer;background:#fff}
@@ -256,11 +257,11 @@ select.empty{color:var(--n-muted)}
 <!-- 2. Перед чтением (одинаково в обоих вариантах) -->
 <section class="screen" id="s-pre"><div class="sheet">
   <div class="steps" aria-hidden="true"><i class="done"></i><i class="done"></i><i></i><i></i><i></i></div>
-  <p class="stepnum">Шаг 2 из 5</p>
-  <h1>Перед чтением</h1>
-  <p class="lead">Коротко ответьте на вопросы – по-английски или по-русски.</p>
+  <p class="stepnum">Step 2 of 5</p>
+  <h1>Before you read</h1>
+  <p class="lead">Answer the questions briefly. Write in English if you can.</p>
   <div id="pre-qs"></div>
-  <button class="btn" id="b-pre" type="button">Перейти к тексту</button>
+  <button class="btn" id="b-pre" type="button">Go to the text</button>
 </div></section>
 
 <!-- 3. Чтение (различается в вариантах А и Б) и задания под текстом -->
@@ -280,9 +281,9 @@ select.empty{color:var(--n-muted)}
 <div class="wr-item">2. Many platforms require little more than a phone and an identity document.<div class="tf"><label><input type="radio" name="wr1" value="T"> <span>True</span></label><label><input type="radio" name="wr1" value="F"> <span>False</span></label></div></div>
 <div class="wr-item">3. All countries have reached the same conclusion about the status of gig workers.<div class="tf"><label><input type="radio" name="wr2" value="T"> <span>True</span></label><label><input type="radio" name="wr2" value="F"> <span>False</span></label></div></div>
 </div></article>
-<aside><div class="ab" id="setbox"><h3>Задание</h3>Прочитайте текст внимательно, чтобы полностью и точно понять его: основную мысль, аргументы автора, примеры и значения выделенных терминов. Возвращайтесь к фрагментам, которые показались трудными.</div><div class="ab"><h3>Did you know?</h3>Did you know? The word “economy” comes from the Greek word oikonomia, which originally meant the management of a household.</div></aside></div>
-<div class="finish-wrap"><button class="btn" id="b-finish" type="button">Я прочитал(а) текст</button></div></div>
-<div id="gloss"><h2>Glossary</h2><dl><dt data-t="algorithmic management">algorithmic management</dt><dd>organising and controlling work with the help of computer programs instead of human managers (алгоритмическое управление)</dd><dt data-t="commission">commission</dt><dd>a percentage of the price that a company keeps for arranging a sale or service (комиссия)</dd><dt data-t="deactivation">deactivation</dt><dd>blocking a worker’s account so that they can no longer receive tasks on the platform (отключение от платформы)</dd><dt data-t="digital platform">digital platform</dt><dd>an online service or app that connects people who offer work with people who need it (цифровая платформа)</dd><dt data-t="employment status">employment status</dt><dd>the legal category of a working person, which decides what rights and protection they have (трудовой статус)</dd><dt data-t="income volatility">income volatility</dt><dd>the situation when the amount of money a person earns changes a lot from week to week (нестабильность дохода)</dd><dt data-t="independent contractors">independent contractors</dt><dd>people who work for themselves and are paid for separate tasks, not as employees (независимые подрядчики)</dd><dt data-t="scalability">scalability</dt><dd>the ability of a business to grow quickly without a large increase in costs (масштабируемость)</dd></dl><button class="btn sec" id="gloss-back" type="button">Вернуться к тексту</button></div>
+<aside><div class="ab" id="setbox"><h3>Task</h3>Read the text carefully to understand it fully and accurately: the main idea, the author&#x27;s arguments, the examples and the meaning of the highlighted terms. Go back to any parts that seem difficult.</div><div class="ab"><h3>Did you know?</h3>Did you know? The word “economy” comes from the Greek word oikonomia, which originally meant the management of a household.</div></aside></div>
+<div class="finish-wrap"><button class="btn" id="b-finish" type="button">I have finished reading</button></div></div>
+<div id="gloss"><h2>Glossary</h2><dl><dt data-t="algorithmic management">algorithmic management</dt><dd>organising and controlling work with the help of computer programs instead of human managers (алгоритмическое управление)</dd><dt data-t="commission">commission</dt><dd>a percentage of the price that a company keeps for arranging a sale or service (комиссия)</dd><dt data-t="deactivation">deactivation</dt><dd>blocking a worker’s account so that they can no longer receive tasks on the platform (отключение от платформы)</dd><dt data-t="digital platform">digital platform</dt><dd>an online service or app that connects people who offer work with people who need it (цифровая платформа)</dd><dt data-t="employment status">employment status</dt><dd>the legal category of a working person, which decides what rights and protection they have (трудовой статус)</dd><dt data-t="income volatility">income volatility</dt><dd>the situation when the amount of money a person earns changes a lot from week to week (нестабильность дохода)</dd><dt data-t="independent contractors">independent contractors</dt><dd>people who work for themselves and are paid for separate tasks, not as employees (независимые подрядчики)</dd><dt data-t="scalability">scalability</dt><dd>the ability of a business to grow quickly without a large increase in costs (масштабируемость)</dd></dl><button class="btn sec" id="gloss-back" type="button">Back to the text</button></div>
 <div class="after" id="after">
   <div class="sheet" id="paasbox" hidden>
     <div class="steps" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i></i><i></i></div>
@@ -297,12 +298,12 @@ select.empty{color:var(--n-muted)}
   </div>
   <div class="sheet" id="testzone" hidden>
     <div class="steps" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i></i></div>
-    <p class="stepnum">Шаг 4 из 5</p>
-    <h1>Задания после чтения</h1>
-    <p class="lead">Текст находится выше – прокрутите страницу вверх, если нужно что-то перечитать.</p>
+    <p class="stepnum">Step 4 of 5</p>
+    <h1>After reading</h1>
+    <p class="lead">The text is above. Scroll up whenever you need to reread something.</p>
     <div id="tasks"></div>
     <p id="test-err" class="err"></p>
-    <button class="btn" id="b-test" type="button">Сохранить и перейти к анкете</button>
+    <button class="btn" id="b-test" type="button">Save my answers</button>
   </div>
 </div>
 </section>
@@ -336,7 +337,7 @@ select.empty{color:var(--n-muted)}
 </div></section>
 
 <div id="pop" role="dialog"></div>
-<div id="hl"><button id="hl-mark" type="button">Выделить</button><button id="hl-under" type="button">Подчеркнуть</button></div>
+<div id="hl"><button id="hl-mark" type="button">Highlight</button><button id="hl-under" type="button">Underline</button></div>
 
 <script>
 /* ===== НАСТРОЙКА: адрес веб-приложения Google Apps Script ===== */
@@ -512,7 +513,7 @@ if (CFG.variant === "A") {
     ev.stopPropagation();
     closePop();
     const t = b.dataset.t, g = glossEntry(t);
-    pop.innerHTML = `<button class="x" type="button" aria-label="Закрыть">×</button><b>${esc(t)}</b>${esc(g.en)}<div class="tr">${esc(g.ru)}</div>`;
+    pop.innerHTML = `<button class="x" type="button" aria-label="Close">×</button><b>${esc(t)}</b>${esc(g.en)}<div class="tr">${esc(g.ru)}</div>`;
     pop.style.display = "block"; b.classList.add("open");
     const r = b.getBoundingClientRect();
     const w = pop.offsetWidth;
@@ -529,7 +530,7 @@ if (CFG.variant === "A") {
   // заметки
   $$(".note-btn").forEach(b => b.addEventListener("click", () => {
     const ta = b.nextElementSibling; ta.hidden = !ta.hidden;
-    b.textContent = ta.hidden ? (ta.value.trim() ? "Заметка сохранена – открыть" : "+ Заметка") : "Скрыть заметку";
+    b.textContent = ta.hidden ? (ta.value.trim() ? "Note saved – open" : "+ Note") : "Hide note";
     if (!ta.hidden) ta.focus();
   }));
 
@@ -562,7 +563,7 @@ if (CFG.variant === "A") {
       const right = String(inp.value === "T") === String(w[2]);
       const fb = $("#fb" + i);
       fb.className = "fb " + (right ? "ok" : "no");
-      fb.textContent = right ? "Верно." : "Неверно. Перечитайте абзац " + (w[0] + 1) + ".";
+      fb.textContent = right ? "Correct." : "Not quite. Reread paragraph " + (w[0] + 1) + ".";
       $$(`input[name="wr${i}"]`).forEach(x => x.disabled = true);
     }));
   });
@@ -657,30 +658,30 @@ const P = CFG.post;
 let tTest = 0, planOrder = [];
 function startTasks(){
   const h = [];
-  h.push(`<div class="task" id="t-plan"><div class="task-h"><small>Задание 1 из 5</small>Восстановите план текста</div>
-    <p class="how">Нажимайте на пункты в том порядке, в каком эти мысли идут в тексте. Повторное нажатие снимает номер.</p>
+  h.push(`<div class="task" id="t-plan"><div class="task-h"><small>Task 1 of 5</small>Put the main ideas in order</div>
+    <p class="how">Tap the points in the order in which these ideas appear in the text. Tap a point again to remove its number.</p>
     ${P.plan.map((it,j) => `<button type="button" class="ord" data-i="${it.i}"><span class="nb"></span><span>${esc(it.s)}</span></button>`).join("")}
-    <button type="button" class="linkbtn" id="plan-reset">Начать заново</button></div>`);
-  h.push(`<div class="task" id="t-tfns"><div class="task-h"><small>Задание 2 из 5</small>Верно, неверно или в тексте не сказано?</div>
-    <p class="how">True – утверждение соответствует тексту, False – противоречит ему, Not stated – в тексте об этом ничего не сказано.</p>
+    <button type="button" class="linkbtn" id="plan-reset">Start again</button></div>`);
+  h.push(`<div class="task" id="t-tfns"><div class="task-h"><small>Task 2 of 5</small>True, false or not stated?</div>
+    <p class="how">True – the statement agrees with the text. False – it contradicts the text. Not stated – the text says nothing about it.</p>
     ${P.tfns.map((s,j) => `<div class="st"><p>${j+1}. ${esc(s[0])}</p><div class="seg">
       ${["T","F","NS"].map(v => `<label><input type="radio" name="tf${j}" value="${v}">${v === "T" ? "True" : v === "F" ? "False" : "Not stated"}</label>`).join("")}</div></div>`).join("")}</div>`);
-  h.push(`<div class="task" id="t-cause"><div class="task-h"><small>Задание 3 из 5</small>Причины и следствия</div>
-    <p class="how">Подберите к каждой причине следствие, о котором говорится в тексте. Одно следствие лишнее.</p>
-    ${P.cause.causes.map((c,j) => `<div class="ce"><p>${j+1}. ${esc(c)}</p><select id="ce${j}" class="empty" aria-label="Следствие для причины ${j+1}">
-      <option value="">Выберите следствие</option>${P.cause.effects.map((e,k) => `<option value="${k}">${esc(e)}</option>`).join("")}</select></div>`).join("")}</div>`);
+  h.push(`<div class="task" id="t-cause"><div class="task-h"><small>Task 3 of 5</small>Causes and effects</div>
+    <p class="how">Match each cause with the effect described in the text. There is one extra effect.</p>
+    ${P.cause.causes.map((c,j) => `<div class="ce"><p>${j+1}. ${esc(c)}</p><select id="ce${j}" class="empty" aria-label="Effect for cause ${j+1}">
+      <option value="">Choose an effect</option>${P.cause.effects.map((e,k) => `<option value="${k}">${esc(e)}</option>`).join("")}</select></div>`).join("")}</div>`);
   let n = 0;
   const sumHtml = esc(P.summary.text).replace(/\{(\d)\}/g, (m,d) => {
     const j = +d - 1;
-    return `<select id="gap${j}" class="empty" aria-label="Пропуск ${d}"><option value="">(${d})</option>${P.summary.bank.map(w => `<option value="${esc(w)}">${esc(w)}</option>`).join("")}</select>`;
+    return `<select id="gap${j}" class="empty" aria-label="Gap ${d}"><option value="">(${d})</option>${P.summary.bank.map(w => `<option value="${esc(w)}">${esc(w)}</option>`).join("")}</select>`;
   });
-  h.push(`<div class="task" id="t-sum"><div class="task-h"><small>Задание 4 из 5</small>Дополните краткое изложение текста</div>
-    <p class="how">Выберите термин для каждого пропуска. Два термина лишние.</p>
+  h.push(`<div class="task" id="t-sum"><div class="task-h"><small>Task 4 of 5</small>Complete the summary</div>
+    <p class="how">Choose a term for each gap. There are two extra terms.</p>
     <ul class="bank">${P.summary.bank.map(w => `<li>${esc(w)}</li>`).join("")}</ul>
     <p class="sum">${sumHtml}</p></div>`);
-  h.push(`<div class="task" id="t-op"><div class="task-h"><small>Задание 5 из 5</small>Ваше мнение</div>
-    <p class="how">${esc(P.opinion)} Пишите по-английски.</p>
-    <textarea id="opinion" rows="5" placeholder="In my opinion…"></textarea><div class="wc" id="wc">Слов: 0 (нужно не меньше 10)</div></div>`);
+  h.push(`<div class="task" id="t-op"><div class="task-h"><small>Task 5 of 5</small>Your opinion</div>
+    <p class="how">${esc(P.opinion)}</p>
+    <textarea id="opinion" rows="5" placeholder="In my opinion…"></textarea><div class="wc" id="wc">Words: 0 (at least 10)</div></div>`);
   $("#tasks").innerHTML = h.join("");
   // план: нажатие присваивает следующий номер
   const ords = $$(".ord");
@@ -692,7 +693,7 @@ function startTasks(){
   }));
   $("#plan-reset").addEventListener("click", () => { planOrder = []; drawPlan(); });
   const op = $("#opinion");
-  op.addEventListener("input", () => { const w = words(op.value); $("#wc").textContent = "Слов: " + w + (w < 10 ? " (нужно не меньше 10)" : ""); });
+  op.addEventListener("input", () => { const w = words(op.value); $("#wc").textContent = "Words: " + w + (w < 10 ? " (at least 10)" : ""); });
   $("#paasbox").hidden = true;
   $("#testzone").hidden = false;
   $("#testzone").scrollIntoView({behavior: smooth, block: "start"});
@@ -709,7 +710,7 @@ $("#b-test").addEventListener("click", () => {
   const opOk = words($("#opinion").value) >= 10;
   [["#t-plan",planOk],["#t-tfns",tfOk],["#t-cause",ceOk],["#t-sum",gOk],["#t-op",opOk]].forEach(([id,ok]) => { $(id).classList.toggle("miss", !ok); if (!ok) miss.push(id); });
   if (miss.length) {
-    $("#test-err").textContent = "Выполните все задания (не выполнено: " + miss.length + ").";
+    $("#test-err").textContent = "Please complete all the tasks (" + miss.length + " not completed).";
     $(miss[0]).scrollIntoView({behavior: smooth, block: "start"}); return;
   }
   D.test_ms = now() - tTest;
